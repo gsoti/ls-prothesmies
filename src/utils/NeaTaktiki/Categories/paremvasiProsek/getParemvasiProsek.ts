@@ -1,4 +1,4 @@
-import { CalculatedDate, getDateInfo } from '../../../CalculateDates/calculateDate';
+import { getDateInfo } from '../../../CalculateDates/calculateDate';
 import { argiesFunc } from '../../../ArgiesAndAnastoli/ArgiesFunc';
 import { addArgAndAnastDays } from '../../../Various/addAndRemoveDays';
 import { anastoliFunc } from '../../../ArgiesAndAnastoli/AnastoliFunc';
@@ -11,11 +11,12 @@ import {
   danielGetAnastolesAnaDikastirio,
   getAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
+import { DateCalculation } from '../../../../types';
 
 // interface Options {
 //   dimosio?: boolean;
 // }
-export const getParemvasiProsekCalculation = (start: string, options: Options): CalculatedDate => {
+export const getParemvasiProsekCalculation = (start: string, options: Options): DateCalculation => {
   let argiesDimosiou: string[] = [];
   if (options?.dimosio) {
     argiesDimosiou = anastoliDimosiouFunc();

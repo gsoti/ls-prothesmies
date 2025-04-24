@@ -117,17 +117,6 @@ export const addMonths = function(
 //   return dateWithAddedMonths;
 // }
 
-export interface CalculatedDate {
-  date: string; 
-  paused: string[]; 
-  skipped: string[];  
-  logic: {
-    days: number;
-    when: 'before' | 'after';
-    reference: string;
-  }
-}
-
 export function getDate(
   start: string,
   noOfDays: number,

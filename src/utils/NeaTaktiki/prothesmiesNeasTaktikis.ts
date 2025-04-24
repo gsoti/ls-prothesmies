@@ -14,7 +14,7 @@ import { getProtaseisDetails } from './Categories/protaseis/getProtaseisDetails'
 import { getProsthikiDetails } from './Categories/prosthiki/getProsthikiDetails';
 import { getOpsigeneisDetails } from './Categories/opsigeneis/getOpsigeneisDetails';
 import { getOpsigeneisAntikrousiDetails } from './Categories/opsigeneisAntikrousi/getOpsigeneisAntikrousiDetails';
-import { CalculatedDate } from '../CalculateDates/calculateDate';
+import { DateCalculation } from '../../types';
 
 interface ProthesmiesNeasTaktikis {
   katathesi: string;
@@ -62,11 +62,11 @@ interface ProthesmiesNeasTaktikis {
     ypologismos: string[];
     imeres: string[];
   };
-  epidosiCalculation: CalculatedDate;
-  paremvasiCalculation: CalculatedDate;
-  paremvasiProsekCalculation: CalculatedDate;
-  opsigeneisCalculation?: CalculatedDate;
-  opsigeneisAntikrousiCalculation?: CalculatedDate;
+  epidosiCalculation: DateCalculation;
+  paremvasiCalculation: DateCalculation;
+  paremvasiProsekCalculation: DateCalculation;
+  opsigeneisCalculation?: DateCalculation;
+  opsigeneisAntikrousiCalculation?: DateCalculation;
 }
 
 export const prothesmiesNeasTaktikis = (

@@ -1,4 +1,4 @@
-import { CalculatedDate as DateCalculation, getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
+import { getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
 import { argiesFunc } from '../../../ArgiesAndAnastoli/ArgiesFunc';
 import { addArgAndAnastDays } from '../../../Various/addAndRemoveDays';
 import { anastoliFunc } from '../../../ArgiesAndAnastoli/AnastoliFunc';
@@ -10,6 +10,7 @@ import {
   danielGetAnastolesAnaDikastirio,
   getAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
+import { DateCalculation } from '../../../../types';
 
 // interface Options {
 //   dimosio?: boolean;

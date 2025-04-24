@@ -1,4 +1,4 @@
-import { CalculatedDate, getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
+import { getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
 import { argiesFunc } from '../../../ArgiesAndAnastoli/ArgiesFunc';
 import { addArgAndAnastDays } from '../../../Various/addAndRemoveDays';
 import { anastoliFunc } from '../../../ArgiesAndAnastoli/AnastoliFunc';
@@ -10,6 +10,7 @@ import {
   danielGetAnastolesAnaDikastirio,
   getAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
+import { DateCalculation } from '../../../../types';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -18,7 +19,7 @@ export const getAntikrousiOpsig = (start: string, options: Options): string => {
   return getAntikrousiOpsigCalculation(start, options).date;
 }
 
-export const getAntikrousiOpsigCalculation = (start: string, options: Options): CalculatedDate => {
+export const getAntikrousiOpsigCalculation = (start: string, options: Options): DateCalculation => {
   let argiesDimosiou: string[] = [];
   if (options?.dimosio) {
     argiesDimosiou = anastoliDimosiouFunc();
