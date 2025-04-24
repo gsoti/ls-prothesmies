@@ -54,6 +54,10 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
     date: paremvasi_prosek.date.toISOString().split('T')[0],
     paused: paremvasi_prosek.paused,
     skipped: paremvasi_prosek.skipped,
-    days: days
+    logic: {
+      days: days,
+      when: 'after',
+      reference: 'katathesi',
+    }
   }
 };

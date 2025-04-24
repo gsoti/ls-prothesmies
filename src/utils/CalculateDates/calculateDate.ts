@@ -120,8 +120,12 @@ export const addMonths = function(
 export interface CalculatedDate {
   date: string; 
   paused: string[]; 
-  skipped: string[];
-  days: number;
+  skipped: string[];  
+  logic: {
+    days: number;
+    when: 'before' | 'after';
+    reference: string;
+  }
 }
 
 export function getDate(

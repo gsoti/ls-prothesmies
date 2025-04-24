@@ -80,6 +80,10 @@ export const getAntikrousiOpsigCalculation = (start: string, options: Options): 
     date: epidosi.date.toISOString().split('T')[0],
     paused: epidosi.paused,
     skipped: epidosi.skipped,
-    days: days
+    logic: {
+      days: days,
+      when: 'before',
+      reference: 'dikasimos'
+    }
   }
 };

@@ -45,6 +45,10 @@ export const getEpidosiCalculation = (start: string, options: Options): Calculat
     date: epidosi.date.toISOString().split('T')[0],
     paused: epidosi.paused,
     skipped: epidosi.skipped,
-    days: days
+    logic: {
+      days: days,
+      when: 'after',
+      reference: 'katathesi',
+    }
   }
 };

@@ -48,6 +48,10 @@ export const getParemvasiCalculation = (start: string, options: Options): Calcul
     date: paremvasi.date.toISOString().split('T')[0],
     paused: paremvasi.paused,
     skipped: paremvasi.skipped,
-    days: days
+    logic: {
+      days: days,
+      when: 'after',
+      reference: 'katathesi',
+    }
   }
 };

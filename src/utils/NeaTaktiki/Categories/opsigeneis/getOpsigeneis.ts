@@ -1,4 +1,4 @@
-import { CalculatedDate, getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
+import { CalculatedDate as DateCalculation, getDateReverseCalculation } from '../../../CalculateDates/calculateDate';
 import { argiesFunc } from '../../../ArgiesAndAnastoli/ArgiesFunc';
 import { addArgAndAnastDays } from '../../../Various/addAndRemoveDays';
 import { anastoliFunc } from '../../../ArgiesAndAnastoli/AnastoliFunc';
@@ -18,7 +18,7 @@ export const getOpsigeneis = (start: string, options: Options): string => {
   return getOpsigeneisCalculation(start, options).date;
 }
 
-export const getOpsigeneisCalculation = (start: string, options: Options): CalculatedDate => {
+export const getOpsigeneisCalculation = (start: string, options: Options): DateCalculation => {
   let argiesDimosiou: string[] = [];
   if (options?.dimosio) {
     argiesDimosiou = anastoliDimosiouFunc();
@@ -41,6 +41,10 @@ export const getOpsigeneisCalculation = (start: string, options: Options): Calcu
     date: opsigeneis.date.toISOString().split('T')[0],
     paused: opsigeneis.paused,
     skipped: opsigeneis.skipped,
-    days: days
+    logic: {
+      days: days,
+      when: 'before',
+      reference: 'dikasimos'
+    }
   }
 };
