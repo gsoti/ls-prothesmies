@@ -6,8 +6,8 @@ export interface Options {
   topiki?: Topiki;
   klisi?: boolean;
 }
-type Yliki = 'Ειρ' | 'Μον' | 'Πολ';
-type Topiki =
+export type Yliki = 'Ειρ' | 'Μον' | 'Πολ';
+export type Topiki =
   | 'Άμφισσας'
   | 'Άνδρου'
   | 'Άργους'

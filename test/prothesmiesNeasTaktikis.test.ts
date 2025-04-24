@@ -1,4 +1,5 @@
 import { prothesmiesNeasTaktikis } from '../src/utils/NeaTaktiki/prothesmiesNeasTaktikis';
+import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
 // import { getProtaseis } from '../src/utils/NeaTaktiki/Categories/getProtaseis';
 // import { getProsthiki } from '../src/utils/NeaTaktiki/Categories/getProsthiki';
 // import { getParemvasiProsek } from '../src/utils/NeaTaktiki/Categories/getParemvasiProsek';
@@ -7,9 +8,17 @@ import { prothesmiesNeasTaktikis } from '../src/utils/NeaTaktiki/prothesmiesNeas
 // console.log(prothesmiesNeasTaktikis('2022-10-08', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-09', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-10', { topiki: 'Αθηνών' }));
+let civilCase = {
+  diadikasia: 'ΤΑΚΤΙΚΗ',
+  court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
+  imerominia_katathesis: '2024-07-08',
+  dikasimos: '2025-05-30',
+}
+let deadlines = prothesmiesCivilCase(civilCase)
 console.log(
   //prothesmiesNeasTaktikis('2023-04-11', { topiki: 'Φαρσάλων', yliki: 'Ειρ' })
-  prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
+  // prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
+  deadlines.map(d => `${d.date}: ${d.name}`).sort().join('\n')
 );
 // console.log(
 
