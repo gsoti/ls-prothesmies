@@ -10,8 +10,15 @@ export function prothesmiesCivilCase(
     court: string, 
     imerominia_katathesis: string, 
     dikasimos: string | undefined,
+    dimosio?: boolean,
+    exoterikou?: boolean,
+    klisi?: boolean,
   }): Deadline[] {
-    // have to also produce the yliki
+    // Assign default value here
+    const { dimosio = false } = civilCase; 
+    const { exoterikou = false } = civilCase;
+    const { klisi = false } = civilCase;
+    // TODO: have to also produce the yliki
     const topiki = advancedCourtToTopiki(civilCase.court);
     if (
       civilCase.diadikasia === 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ' ||
@@ -21,7 +28,13 @@ export function prothesmiesCivilCase(
       // civilCase.diadikasia === 'ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ' ||
       // civilCase.diadikasia === 'ΤΑΚΤΙΚΗ ΠΟΛΥΜΕΛΟΥΣ'
     ) {
-      return _prothesmiesNeasTaktikis(civilCase, topiki);
+      return _prothesmiesNeasTaktikis(
+        civilCase, 
+        dimosio,
+        exoterikou,
+        klisi,
+        topiki
+      );
     }
     return []
     //return unsupportedDeadlines(civilCase);
@@ -31,15 +44,21 @@ export function prothesmiesCivilCase(
     civilCase: { 
       imerominia_katathesis: string, 
       dikasimos: string | undefined,
-    }, topiki: Topiki): Deadline[] {
+    }, 
+    dimosio: boolean,
+    exoterikou: boolean,
+    klisi: boolean,
+    topiki: Topiki
+  ): Deadline[] {
     try {
       const prothesmies = prothesmiesNeasTaktikis(civilCase.imerominia_katathesis, {
-        dimosio: false,
-        // exoterikou: false,
+        dimosio: dimosio,
+        exoterikou: exoterikou,
+        klisi: klisi,
         topiki: topiki,
         // yliki: 'Ειρ',
         dikasimos: civilCase.dikasimos,
-        // klisi: false
+        
       });
       return parseDeadlines(prothesmies);
     } catch (error) {
