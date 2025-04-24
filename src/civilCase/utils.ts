@@ -31,6 +31,42 @@ export function parseDeadlines(input: any): Deadline[] {
   
     return deadlines;
   }
+
+  export function unsupportedDeadlines(
+    civilCase: { 
+        diadikasia: string, 
+        court: string, 
+        imerominia_katathesis: string, 
+        dikasimos: string | undefined,
+    }
+): Deadline[] { 
+    const deadlines: Deadline[] = [
+        {
+            name: getDeadlineName(DeadlineType.KATATHESI),
+            type: DeadlineType.KATATHESI,
+            date: civilCase.imerominia_katathesis,
+            nomothesia: [],
+            ypologismos: [],
+            imeres: [],
+            calculation: null,
+        }
+    ];
+
+    if (civilCase.dikasimos) {
+        deadlines.push({
+            name: getDeadlineName(DeadlineType.DIKASIMOS),
+            type: DeadlineType.DIKASIMOS,
+            date: civilCase.dikasimos,
+            nomothesia: [],
+            ypologismos: [],
+            imeres: [],
+            calculation: null,
+        });
+    }
+
+    return deadlines;
+}
+  
   
   /**
    * Maps a key from the input object to a DeadlineType

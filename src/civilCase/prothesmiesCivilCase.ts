@@ -23,7 +23,8 @@ export function prothesmiesCivilCase(
     ) {
       return _prothesmiesNeasTaktikis(civilCase, topiki);
     }
-    return [];
+    return []
+    //return unsupportedDeadlines(civilCase);
   }
   
   function _prothesmiesNeasTaktikis(
