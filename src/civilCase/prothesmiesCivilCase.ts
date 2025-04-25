@@ -1,15 +1,16 @@
 import { Deadline } from "../types";
+import { prothesmiesMikrodiaforon } from "../utils/Mikrodiafores/prothesmiesMikrodiaforon";
 import { prothesmiesNeasTaktikis } from "../utils/NeaTaktiki/prothesmiesNeasTaktikis";
 import { Topiki } from "../utils/NeaTaktiki/Types/interfaces";
 import { advancedCourtToTopiki } from "./topiki";
-import { parseDeadlines } from "./utils";
+import { dikasimosDeadline, parseDeadlines } from "./utils";
 
 export function prothesmiesCivilCase(
   civilCase: { 
     diadikasia: string, 
     court: string, 
     imerominia_katathesis: string, 
-    dikasimos: string | undefined,
+    dikasimos?: string,
     dimosio?: boolean,
     exoterikou?: boolean,
     klisi?: boolean,
@@ -35,6 +36,15 @@ export function prothesmiesCivilCase(
         klisi,
         topiki
       );
+    } else if (
+      civilCase.diadikasia === 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ'
+    ) {
+      return _prothesmiesMikrodiaforon(
+        civilCase, 
+        dimosio,
+        exoterikou,
+        topiki
+      );
     }
     return []
     //return unsupportedDeadlines(civilCase);
@@ -43,7 +53,7 @@ export function prothesmiesCivilCase(
   function _prothesmiesNeasTaktikis(
     civilCase: { 
       imerominia_katathesis: string, 
-      dikasimos: string | undefined,
+      dikasimos?: string,
     }, 
     dimosio: boolean,
     exoterikou: boolean,
@@ -64,4 +74,26 @@ export function prothesmiesCivilCase(
     } catch (error) {
       throw error
     }
+  }
+
+  function _prothesmiesMikrodiaforon(
+    civilCase: { 
+      imerominia_katathesis: string,
+      dikasimos?: string,
+    }, 
+    dimosio: boolean,
+    exoterikou: boolean,
+    topiki: Topiki
+  ): Deadline[] {
+    const prothesmies = prothesmiesMikrodiaforon(civilCase.imerominia_katathesis, {
+      dimosio: dimosio,
+      exoterikou: exoterikou,
+      topiki: topiki
+      // yliki: string;
+    });
+    const deadlines = parseDeadlines(prothesmies);
+    if (civilCase.dikasimos) {
+      deadlines.push(dikasimosDeadline(civilCase.dikasimos))
+    }
+    return deadlines;
   }

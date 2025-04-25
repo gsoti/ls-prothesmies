@@ -8,11 +8,17 @@ import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
 // console.log(prothesmiesNeasTaktikis('2022-10-08', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-09', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-10', { topiki: 'Αθηνών' }));
+// let civilCase = {
+//   diadikasia: 'ΤΑΚΤΙΚΗ',
+//   court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
+//   imerominia_katathesis: '2024-07-08',
+//   dikasimos: '2025-05-30',
+// }
 let civilCase = {
-  diadikasia: 'ΤΑΚΤΙΚΗ',
-  court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
-  imerominia_katathesis: '2024-07-08',
-  dikasimos: '2025-05-30',
+  diadikasia: 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ',
+  court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ)',
+  imerominia_katathesis: '2025-02-06',
+  dikasimos: '2025-11-14',
 }
 let deadlines = prothesmiesCivilCase(civilCase)
 console.log(
