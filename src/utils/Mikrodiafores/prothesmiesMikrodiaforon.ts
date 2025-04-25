@@ -1,4 +1,5 @@
-import { getEpidosi } from './Categories/epidosi/getEpidosi';
+import { DateCalculation } from '../../types';
+import { getEpidosiCalculation } from './Categories/epidosi/getEpidosi';
 import { getEpidosiDetails } from './Categories/epidosi/getEpidosiDetails';
 
 import { getParemvasi } from './Categories/paremvasi/getParemvasi';
@@ -60,6 +61,7 @@ interface ProthesmiesMikrodiaforon {
     ypologismos: string[];
     imeres: string[];
   };
+  epidosiCalculation: DateCalculation
 }
 
 export const prothesmiesMikrodiaforon = (
@@ -76,7 +78,8 @@ export const prothesmiesMikrodiaforon = (
     topiki,
   };
 
-  let epidosi = getEpidosi(katathesi, options ? options : optionsDefault);
+  let epidosiCalculation = getEpidosiCalculation(katathesi, options ? options : optionsDefault);
+  let epidosi = epidosiCalculation.date;
   let proskomidi = getProskomidi(epidosi, options ? options : optionsDefault);
   let prosthiki = getProsthiki(proskomidi, options ? options : optionsDefault);
   let paremvasi = getParemvasi(katathesi, options ? options : optionsDefault);
@@ -127,6 +130,7 @@ export const prothesmiesMikrodiaforon = (
       prosthiki,
       options ? options : optionsDefault
     ),
+    epidosiCalculation: epidosiCalculation
   };
 
   return prothesmies;

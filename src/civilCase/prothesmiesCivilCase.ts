@@ -29,22 +29,11 @@ export function prothesmiesCivilCase(
       // civilCase.diadikasia === 'ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ' ||
       // civilCase.diadikasia === 'ΤΑΚΤΙΚΗ ΠΟΛΥΜΕΛΟΥΣ'
     ) {
-      return _prothesmiesNeasTaktikis(
-        civilCase, 
-        dimosio,
-        exoterikou,
-        klisi,
-        topiki
-      );
+      return _prothesmiesNeasTaktikis(civilCase, dimosio, exoterikou, klisi, topiki);
     } else if (
       civilCase.diadikasia === 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ'
     ) {
-      return _prothesmiesMikrodiaforon(
-        civilCase, 
-        dimosio,
-        exoterikou,
-        topiki
-      );
+      return _prothesmiesMikrodiaforon(civilCase, dimosio, exoterikou, topiki);
     }
     return []
     //return unsupportedDeadlines(civilCase);

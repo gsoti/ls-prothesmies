@@ -1,4 +1,4 @@
-import { getDate } from '../../../CalculateDates/calculateDate';
+import { getDateInfo } from '../../../CalculateDates/calculateDate';
 import { argiesFunc } from '../../../ArgiesAndAnastoli/ArgiesFunc';
 import { addArgAndAnastDays } from '../../../Various/addAndRemoveDays';
 import { anastoliFunc } from '../../../ArgiesAndAnastoli/AnastoliFunc';
@@ -9,11 +9,16 @@ import {
   barbaraGetAnastolesAnaDikastirio,
   danielGetAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
+import { DateCalculation } from '../../../../types';
 
 // interface Options {
 //   dimosio?: boolean;
 // }
 export const getEpidosi = (start: string, options?: Options): string => {
+  return getEpidosiCalculation(start, options).date;
+}
+
+export const getEpidosiCalculation = (start: string, options?: Options): DateCalculation => {
   let argiesDimosiou: string[] = [];
   let topiki = options?.topiki ?? 'Αθηνών';
   let days = options?.exoterikou ? 30 : 10;
@@ -22,7 +27,7 @@ export const getEpidosi = (start: string, options?: Options): string => {
     argiesDimosiou = anastoliDimosiouFunc();
   }
   const year = parseInt(start.slice(0, 4));
-  let epidosi = getDate(start, days, {
+  let epidosi = getDateInfo(start, days, {
     argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),
     anastoli: addArgAndAnastDays(anastoliFunc(year), [
       ...argiesDimosiou,
@@ -31,5 +36,14 @@ export const getEpidosi = (start: string, options?: Options): string => {
     ]),
   });
 
-  return epidosi.toISOString().split('T')[0];
+  return {
+    date: epidosi.date.toISOString().split('T')[0],
+    paused: epidosi.paused,
+    skipped: epidosi.skipped,
+    logic: {
+      days: days,
+      when: 'after',
+      reference: 'katathesi',
+    }
+  }
 };
