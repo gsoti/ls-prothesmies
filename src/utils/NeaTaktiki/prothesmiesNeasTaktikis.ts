@@ -105,8 +105,9 @@ export const prothesmiesNeasTaktikis = (
     options ? options : optionsDefault
   );
   let paremvasiProsek = paremvasiProsekCalculation.date;
-  let protaseis = getProtaseis(katathesi, options ? options : optionsDefault);
-
+  // TODO: Have to add calculation logic for protaseis
+  let protaseis = getProtaseis(katathesi, options ? options : optionsDefault);  
+  // TODO: Have to add calculation logic for prosthiki
   let prosthiki = getProsthiki(protaseis, options ? options : optionsDefault);
   let opsigeneis = undefined;
   let opsigeneisAntikrousi = undefined;
