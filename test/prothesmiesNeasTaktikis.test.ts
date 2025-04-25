@@ -17,8 +17,8 @@ import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
 let civilCase = {
   diadikasia: 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ',
   court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ)',
-  imerominia_katathesis: '2025-02-06',
-  dikasimos: '2025-11-14',
+  imerominia_katathesis: '2025-04-25',
+  // dikasimos: '2025-11-14',
 }
 let deadlines = prothesmiesCivilCase(civilCase)
 console.log(
