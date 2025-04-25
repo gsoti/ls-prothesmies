@@ -11,7 +11,7 @@ import { getProskomidiDetails } from './Categories/proskomidi/getProskomidiDetai
 import { getProskomParemv } from './Categories/proskomidiParemvasis/getProskomParemv';
 import { getProskomParemvDetails } from './Categories/proskomidiParemvasis/getProskomParemvDetails';
 
-import { getProsthiki } from './Categories/prosthiki/getProsthiki';
+import { getProsthikiCalculation } from './Categories/prosthiki/getProsthiki';
 import { getProsthikiDetails } from './Categories/prosthiki/getProsthikiDetails';
 
 import { getProsthParemv } from './Categories/prosthikiParemvasis/getProsthParemv';
@@ -63,6 +63,7 @@ interface ProthesmiesMikrodiaforon {
   };
   epidosiCalculation: DateCalculation;
   proskomidiCalculation: DateCalculation;
+  prosthikiCalculation: DateCalculation;
 }
 
 export const prothesmiesMikrodiaforon = (
@@ -83,7 +84,8 @@ export const prothesmiesMikrodiaforon = (
   let epidosi = epidosiCalculation.date;
   let proskomidiCalculation = getProskomidiCalculation(epidosi, options ? options : optionsDefault);
   let proskomidi = proskomidiCalculation.date;
-  let prosthiki = getProsthiki(proskomidi, options ? options : optionsDefault);
+  let prosthikiCalculation = getProsthikiCalculation(proskomidi, options ? options : optionsDefault);
+  let prosthiki = prosthikiCalculation.date;
   let paremvasi = getParemvasi(katathesi, options ? options : optionsDefault);
   let proskomidiParemv = getProskomParemv(
     katathesi,
@@ -134,6 +136,7 @@ export const prothesmiesMikrodiaforon = (
     ),
     epidosiCalculation: epidosiCalculation,
     proskomidiCalculation: proskomidiCalculation,
+    prosthikiCalculation: prosthikiCalculation,
   };
 
   return prothesmies;
