@@ -10,7 +10,8 @@ import {
   danielGetAnastolesAnaDikastirio,
   getAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
-import { DateCalculation } from '../../../../types';
+import { DateCalculation, DeadlineType } from '../../../../types';
+import { getDeadlineNameShort } from '../../../../civilCase/utils';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -45,8 +46,9 @@ export const getOpsigeneisCalculation = (start: string, options: Options): DateC
     logic: {
       days: days,
       when: 'before',
-      reference: 'dikasimos',
+      reference: DeadlineType.DIKASIMOS,
       start: start,
+      name: getDeadlineNameShort(DeadlineType.DIKASIMOS),
     }
   }
 };

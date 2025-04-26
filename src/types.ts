@@ -27,6 +27,7 @@ export interface DateCalculation {
         when: 'before' | 'after';
         reference: string;
         start: string;
+        name: string;
     }
 }
 

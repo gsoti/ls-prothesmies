@@ -9,7 +9,8 @@ import {
   barbaraGetAnastolesAnaDikastirio,
   danielGetAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
-import { DateCalculation } from '../../../../types';
+import { DateCalculation, DeadlineType } from '../../../../types';
+import { getDeadlineNameShort } from '../../../../civilCase/utils';
 
 export const getProskomidi = (start: string, options?: Options): string => {
   return getProskomidiCalculation(start, options).date;
@@ -41,8 +42,9 @@ export const getProskomidiCalculation = (start: string, options?: Options): Date
     logic: {
       days: days,
       when: 'after',
-      reference: 'epidosi',
+      reference: DeadlineType.EPIDOSI,
       start: start,
+      name: getDeadlineNameShort(DeadlineType.EPIDOSI),
     }
   }
 };

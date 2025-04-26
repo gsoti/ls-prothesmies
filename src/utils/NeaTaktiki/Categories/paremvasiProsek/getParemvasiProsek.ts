@@ -11,7 +11,8 @@ import {
   danielGetAnastolesAnaDikastirio,
   getAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
-import { DateCalculation } from '../../../../types';
+import { DateCalculation, DeadlineType } from '../../../../types';
+import { getDeadlineNameShort } from '../../../../civilCase/utils';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -58,8 +59,9 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
     logic: {
       days: days,
       when: 'after',
-      reference: 'katathesi',
+      reference: DeadlineType.KATATHESI,
       start: start,
+      name: getDeadlineNameShort(DeadlineType.KATATHESI),
     }
   }
 };

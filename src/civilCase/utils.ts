@@ -121,7 +121,7 @@ function getDeadlineName(type: DeadlineType): string {
 /**
 * Maps a human-readable name to each deadline type
 */
-function getDeadlineNameShort(type: DeadlineType): string {
+export function getDeadlineNameShort(type: DeadlineType): string {
   switch (type) {
     case DeadlineType.KATATHESI: return "Κατάθεση";
     case DeadlineType.EPIDOSI: return "Επίδοση";

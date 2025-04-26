@@ -9,7 +9,8 @@ import {
   barbaraGetAnastolesAnaDikastirio,
   danielGetAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
-import { DateCalculation } from '../../../../types';
+import { DateCalculation, DeadlineType } from '../../../../types';
+import { getDeadlineNameShort } from '../../../../civilCase/utils';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -50,8 +51,9 @@ export const getProsthParemvCalculation = (
     logic: {
       days: days,
       when: 'after',
-      reference: 'proskomidiParemv',  // TODO: Should double check this 
+      reference: DeadlineType.PROSKOMIDI_PAREMV,  // TODO: Should double check this 
       start: proskParemv,
+      name: getDeadlineNameShort(DeadlineType.PROSKOMIDI_PAREMV),
     }
   }
 };
