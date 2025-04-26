@@ -18,6 +18,7 @@ export function parseDeadlines(input: any): Deadline[] {
 
     const deadline: Deadline = {
       name: getDeadlineName(type),
+      shortName: getDeadlineNameShort(type),
       type: type,
       date: input[key],
       nomothesia: details.nomothesia || [],
@@ -43,6 +44,7 @@ export function unsupportedDeadlines(
   const deadlines: Deadline[] = [
     {
       name: getDeadlineName(DeadlineType.KATATHESI),
+      shortName: getDeadlineNameShort(DeadlineType.KATATHESI),
       type: DeadlineType.KATATHESI,
       date: civilCase.imerominia_katathesis,
       nomothesia: [],
@@ -64,6 +66,7 @@ export function dikasimosDeadline(
 ): Deadline {
   return {
     name: getDeadlineName(DeadlineType.DIKASIMOS),
+    shortName: getDeadlineNameShort(DeadlineType.DIKASIMOS),
     type: DeadlineType.DIKASIMOS,
     date: dikasimos,
     nomothesia: [],
@@ -112,5 +115,25 @@ function getDeadlineName(type: DeadlineType): string {
     case DeadlineType.PROSKOMIDI: return "Προσκομιδή των αποδεικτικών από τους διαδίκους και η υποβολή του έγγραφου υπομνήματος του εναγομένου";
     case DeadlineType.PROSKOMIDI_PAREMV: return "Προσκομιδή των αποδεικτικών και η υποβολή του έγγραφου υπομνήματος της παρέμβασης ή της ανταγωγής";
     case DeadlineType.PROSTHIKI_PAREMV: return "Κατάθεση προσθήκης επί της παρέμβασης ή της ανταγωγής";
+  }
+}
+
+/**
+* Maps a human-readable name to each deadline type
+*/
+function getDeadlineNameShort(type: DeadlineType): string {
+  switch (type) {
+    case DeadlineType.KATATHESI: return "Κατάθεση";
+    case DeadlineType.EPIDOSI: return "Επίδοση";
+    case DeadlineType.PAREMVASI: return "Παρέμβαση";
+    case DeadlineType.PAREMVASI_PROSEK: return "Παρέμβαση του προσεπικαλούμενου";
+    case DeadlineType.PROTASEIS: return "Προτάσεις";
+    case DeadlineType.PROSTHIKI: return "Προσθήκη";
+    case DeadlineType.OPSIGENEIS: return "Οψιγενείς ισχυρυσμοί";
+    case DeadlineType.OPSIGENEIS_ANTIKROUSI: return "Αντίκρουση σε οψιγενείς";
+    case DeadlineType.DIKASIMOS: return "Δικάσιμος";
+    case DeadlineType.PROSKOMIDI: return "Προσκομιδή του εναγομένου";
+    case DeadlineType.PROSKOMIDI_PAREMV: return "Προσκομιδή της παρέμβασης";
+    case DeadlineType.PROSTHIKI_PAREMV: return "Προσθήκης επί της παρέμβασης";
   }
 }

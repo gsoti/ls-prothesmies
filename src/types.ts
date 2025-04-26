@@ -13,6 +13,11 @@ export enum DeadlineType {
     DIKASIMOS = "dikasimos",
 }
 
+// TODO: Add more types as needed
+// Check tipoukeitos for
+// 1. Προθεσμία επίδοσης για ένορκες βεβαιώσεις προτάσεων
+// 2. Προθεσμία επίδοσης για ένορκες βεβαιώσεις προσθήκης - αντίκρουσης
+
 export interface DateCalculation {
     date: string;
     paused: string[];
@@ -27,6 +32,7 @@ export interface DateCalculation {
 
 export interface Deadline {
     name: string;
+    shortName: string;
     type: DeadlineType;
     date: string;
     nomothesia: string[];
