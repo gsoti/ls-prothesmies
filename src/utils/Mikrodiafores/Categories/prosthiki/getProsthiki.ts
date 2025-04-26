@@ -45,6 +45,7 @@ export const getProsthikiCalculation = (proskomidi: string, options?: Options): 
       days: days,
       when: 'after',
       reference: 'proskomidi',
+      start: proskomidi,
     }
   }
 };

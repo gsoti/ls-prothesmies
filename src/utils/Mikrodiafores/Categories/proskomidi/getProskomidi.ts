@@ -42,6 +42,7 @@ export const getProskomidiCalculation = (start: string, options?: Options): Date
       days: days,
       when: 'after',
       reference: 'epidosi',
+      start: start,
     }
   }
 };

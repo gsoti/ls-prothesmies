@@ -59,6 +59,7 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
       days: days,
       when: 'after',
       reference: 'katathesi',
+      start: start,
     }
   }
 };

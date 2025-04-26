@@ -45,7 +45,8 @@ export const getOpsigeneisCalculation = (start: string, options: Options): DateC
     logic: {
       days: days,
       when: 'before',
-      reference: 'dikasimos'
+      reference: 'dikasimos',
+      start: start,
     }
   }
 };

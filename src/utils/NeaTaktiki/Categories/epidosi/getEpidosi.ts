@@ -50,6 +50,7 @@ export const getEpidosiCalculation = (start: string, options: Options): DateCalc
       days: days,
       when: 'after',
       reference: 'katathesi',
+      start: start,
     }
   }
 };

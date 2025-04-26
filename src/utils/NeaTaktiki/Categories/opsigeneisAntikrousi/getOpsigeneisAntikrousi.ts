@@ -84,7 +84,8 @@ export const getAntikrousiOpsigCalculation = (start: string, options: Options): 
     logic: {
       days: days,
       when: 'before',
-      reference: 'dikasimos'
+      reference: 'dikasimos',
+      start: start,
     }
   }
 };

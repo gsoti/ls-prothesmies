@@ -51,6 +51,7 @@ export const getProsthParemvCalculation = (
       days: days,
       when: 'after',
       reference: 'proskomidiParemv',  // TODO: Should double check this 
+      start: proskParemv,
     }
   }
 };

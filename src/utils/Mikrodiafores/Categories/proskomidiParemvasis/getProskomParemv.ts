@@ -45,6 +45,7 @@ export const getProskomParemvCalculation = (start: string, options?: Options): D
       days: days,
       when: 'after',
       reference: 'katathesi',
+      start: start,
     }
   }
 };

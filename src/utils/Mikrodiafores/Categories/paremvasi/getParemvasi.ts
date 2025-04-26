@@ -45,6 +45,7 @@ export const getParemvasiCalculation = (start: string, options?: Options): DateC
       days: days,
       when: 'after',
       reference: 'katathesi',
+      start: start,
     }
   }
 };
