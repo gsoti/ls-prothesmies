@@ -31,6 +31,7 @@ interface ProthesmiesNeasTaktikis {
     nomothesia: string[];
     ypologismos: string[];
     imeres: string[];
+    hightlightedNomothesia: string[];
   };
   paremvasiDetails?: {
     nomothesia: string[];
