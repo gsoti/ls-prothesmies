@@ -5,6 +5,7 @@ import { prothesmiesApopoiisis } from './utils/Apodochi/prothesmiesApopoiisis';
 import { prothesmiesNDSte } from './utils/NeaDikonomiaSte/prothesmiesNDSte';
 import { prothesmiesYas } from './utils/Yas/prothesmiesYas';
 import { prothesmiesCivilCase } from './civilCase/prothesmiesCivilCase';
+import { Deadline, DeadlineType } from './types';
 
 export {
   // prothesmiesNeasTaktikis,
@@ -14,5 +15,7 @@ export {
   prothesmiesNDSte,
   prothesmiesYas,
   prothesmiesCivilCase,
+  Deadline,
+  DeadlineType,
 };
 
