@@ -38,7 +38,7 @@ export function unsupportedDeadlines(
     diadikasia: string,
     court: string,
     imerominia_katathesis: string,
-    dikasimos: string | undefined,
+    dikasimos?: string,
   }
 ): Deadline[] {
   const deadlines: Deadline[] = [
@@ -115,6 +115,7 @@ function getDeadlineName(type: DeadlineType): string {
     case DeadlineType.PROSKOMIDI: return "Προσκομιδή των αποδεικτικών από τους διαδίκους και η υποβολή του έγγραφου υπομνήματος του εναγομένου";
     case DeadlineType.PROSKOMIDI_PAREMV: return "Προσκομιδή των αποδεικτικών και η υποβολή του έγγραφου υπομνήματος της παρέμβασης ή της ανταγωγής";
     case DeadlineType.PROSTHIKI_PAREMV: return "Κατάθεση προσθήκης επί της παρέμβασης ή της ανταγωγής";
+    case DeadlineType.NOW: return "Σήμερα";
   }
 }
 
@@ -135,5 +136,6 @@ export function getDeadlineNameShort(type: DeadlineType): string {
     case DeadlineType.PROSKOMIDI: return "Προσκομιδή του εναγομένου";
     case DeadlineType.PROSKOMIDI_PAREMV: return "Προσκομιδή της παρέμβασης";
     case DeadlineType.PROSTHIKI_PAREMV: return "Προσθήκης επί της παρέμβασης";
+    case DeadlineType.NOW: return "Σήμερα";
   }
 }

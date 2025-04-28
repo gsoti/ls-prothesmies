@@ -11,6 +11,7 @@ export enum DeadlineType {
     PROSKOMIDI_PAREMV = "proskomidiParemv",     // ΜΙΚΡΟΔΙΑΦΟΡΕΣ
     PROSTHIKI_PAREMV = "prosthikiParemv",       // ΜΙΚΡΟΔΙΑΦΟΡΕΣ
     DIKASIMOS = "dikasimos",
+    NOW = "now",
 }
 
 // TODO: Add more types as needed

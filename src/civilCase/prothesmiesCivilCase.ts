@@ -3,7 +3,7 @@ import { prothesmiesMikrodiaforon } from "../utils/Mikrodiafores/prothesmiesMikr
 import { prothesmiesNeasTaktikis } from "../utils/NeaTaktiki/prothesmiesNeasTaktikis";
 import { Topiki } from "../utils/NeaTaktiki/Types/interfaces";
 import { advancedCourtToTopiki } from "./topiki";
-import { dikasimosDeadline, parseDeadlines } from "./utils";
+import { dikasimosDeadline, parseDeadlines, unsupportedDeadlines } from "./utils";
 
 export function prothesmiesCivilCase(
   civilCase: { 
@@ -35,8 +35,7 @@ export function prothesmiesCivilCase(
     ) {
       return _prothesmiesMikrodiaforon(civilCase, dimosio, exoterikou, topiki);
     }
-    return []
-    //return unsupportedDeadlines(civilCase);
+    return unsupportedDeadlines(civilCase);
   }
   
   function _prothesmiesNeasTaktikis(
