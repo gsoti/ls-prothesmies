@@ -11,6 +11,9 @@ import {
 } from '../../../Various/checkEarlierOrLaterDate';
 import { getParemvasiAddedDays } from './getParemvasiAddedDays';
 import { checkIfIncluded } from '../../../Dikastiria/dikastiria';
+import { Nomothesia } from '../../../../nomothesia/types';
+import { nomothesiaNeaTaktiki } from '../../../../nomothesia/neataktiki';
+import { DeadlineType } from '../../../../types';
 
 export const getParemvasiDetails = (
   start: string,
@@ -31,7 +34,8 @@ export const getParemvasiDetails = (
     nomothesia: string[];
     ypologismos: string[];
     imeres: string[];
-  } = { nomothesia: [], ypologismos: [], imeres: [] };
+    formattedNomothesia: Nomothesia[];
+  } = { nomothesia: [], ypologismos: [], imeres: [], formattedNomothesia: [] };
   text.nomothesia = [
     `Αρθ. 238 § 1 ΚΠολΔ Παρεμβάσεις, προσεπικλήσεις, ανακοινώσεις και ανταγωγές στην περίπτωση του άρθρου 237 κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε εξήντα (60) ημέρες από την κατάθεση της αγωγής. Παρεμβάσεις μετά από προσεπίκληση ή ανακοίνωση κατατίθενται και επιδίδονται σε όλους τους διαδίκους, μέσα σε ενενήντα (90) ημέρες από την κατάθεση της αγωγής. Οι παραπάνω προθεσμίες παρατείνονται κατά τριάντα (30) ημέρες για όλους τους διάδικους αν ο αρχικός εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής. Η κατάθεση των προτάσεων και της προσθήκης σε αυτές, γίνεται και στην τελευταία περίπτωση μέσα στις προθεσμίες των παραγράφων 1 και 2 του άρθρου 237.\nΑρθ. 237 § 2 ΚΠολΔ. Οι αμοιβαίες αντικρούσεις γίνονται με προσθήκη στις προτάσεις, η οποία κατατίθεται μέσα στις επόμενες δεκαπέντε (15) ημέρες από τη λήξη της παραπάνω προθεσμίας, με την παρέλευση των οποίων κλείνει ο φάκελος της δικογραφίας. Νέοι ισχυρισμοί με την προσθήκη μπορεί να προταθούν και νέα αποδεικτικά μέσα να προ-σκομισθούν μόνο για την αντίκρουση ισχυρισμών που περιέχονται στις προτάσεις. Εκπρόθεσμες προτάσεις και προσθήκες δεν λαμβάνονται υπόψη.`,
   ];
@@ -62,6 +66,7 @@ export const getParemvasiDetails = (
   const addedDaysText = getParemvasiAddedDays(start, options);
   text.ypologismos = [...text.ypologismos, ...addedDaysText.ypologismos];
   text.imeres = addedDaysText.imeres;
+  text.formattedNomothesia = nomothesiaNeaTaktiki(DeadlineType.PAREMVASI, options.exoterikou || false);
 
   return text;
 };
