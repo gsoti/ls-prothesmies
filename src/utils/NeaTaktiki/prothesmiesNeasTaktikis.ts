@@ -15,6 +15,7 @@ import { getProsthikiDetails } from './Categories/prosthiki/getProsthikiDetails'
 import { getOpsigeneisDetails } from './Categories/opsigeneis/getOpsigeneisDetails';
 import { getOpsigeneisAntikrousiDetails } from './Categories/opsigeneisAntikrousi/getOpsigeneisAntikrousiDetails';
 import { DateCalculation } from '../../types';
+import { Nomothesia } from '../../nomothesia/types';
 
 interface ProthesmiesNeasTaktikis {
   katathesi: string;
@@ -31,7 +32,7 @@ interface ProthesmiesNeasTaktikis {
     nomothesia: string[];
     ypologismos: string[];
     imeres: string[];
-    hightlightedNomothesia: string[];
+    formattedNomothesia: Nomothesia[];
   };
   paremvasiDetails?: {
     nomothesia: string[];

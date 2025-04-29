@@ -6,6 +6,7 @@ import { prothesmiesNDSte } from './utils/NeaDikonomiaSte/prothesmiesNDSte';
 import { prothesmiesYas } from './utils/Yas/prothesmiesYas';
 import { prothesmiesCivilCase } from './civilCase/prothesmiesCivilCase';
 import { Deadline, DeadlineType } from './types';
+import { Nomothesia } from './nomothesia/types';
 
 export {
   // prothesmiesNeasTaktikis,
@@ -17,5 +18,6 @@ export {
   prothesmiesCivilCase,
   Deadline,
   DeadlineType,
+  Nomothesia,
 };
 

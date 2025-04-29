@@ -1,3 +1,5 @@
+import { Nomothesia } from "./nomothesia/types";
+
 export enum DeadlineType {
     KATATHESI = "katathesi",                    
     EPIDOSI = "epidosi",                        // NEA TAKTIKH, ΜΙΚΡΟΔΙΑΦΟΡΕΣ
@@ -38,6 +40,7 @@ export interface Deadline {
     type: DeadlineType;
     date: string;
     nomothesia: string[];
+    formattedNomothesia: Nomothesia[];
     ypologismos: string[];
     imeres: string[];
     calculation: DateCalculation | null;

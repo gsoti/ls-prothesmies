@@ -11,6 +11,9 @@ import {
 } from '../../../Various/checkEarlierOrLaterDate';
 import { getEpidosiAddedDays } from './getEpidosAddedDays';
 import { checkIfIncluded } from '../../../Dikastiria/dikastiria';
+import { Nomothesia } from '../../../../nomothesia/types';
+import { DeadlineType } from '../../../../types';
+import { nomothesiaNeaTaktiki } from '../../../../nomothesia/neataktiki';
 
 export const getEpidosiDetails = (
   start: string,
@@ -31,10 +34,10 @@ export const getEpidosiDetails = (
     nomothesia: string[];
     ypologismos: string[];
     imeres: string[];
-    hightlightedNomothesia: string[];
+    formattedNomothesia: Nomothesia[];
   } = {
     nomothesia: [], ypologismos: [], imeres: [],
-    hightlightedNomothesia: []
+    formattedNomothesia: []
   };
   text.nomothesia = [
     `Αρθ. 215 § 2 ΚΠολΔ Στην περίπτωση του άρθρου 237, η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της και αν αυτός ή κάποιος από τους ομοδίκους διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής μέσα σε προθεσμία εξήντα (60) ημερών. Αν η αγωγή δεν επιδοθεί μέσα στην προθεσμία αυτή, θεωρείται ως μη ασκηθείσα. (όπως τροποποιήθηκε με το άρθρο δεύτερο του άρθρου 1 του Ν.4335/2015, ΦΕΚ Α 87. Έναρξη ισχύος από 1.1.2016).`,
@@ -66,14 +69,7 @@ export const getEpidosiDetails = (
   const addedDaysText = getEpidosiAddedDays(start, options);
   text.ypologismos = [...text.ypologismos, ...addedDaysText.ypologismos];
   text.imeres = addedDaysText.imeres;
-  text.hightlightedNomothesia = options.exoterikou ?
-  [
-    "η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία από την κατάθεσή της και αν αυτός ή κάποιος από τους ομοδίκους διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής μέσα σε προθεσμία εξήντα (60) ημερών",
-    "από την κατάθεσή της και αν αυτός ή κάποιος από τους ομοδίκους διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής μέσα σε προθεσμία εξήντα (60) ημερών",
-  ] :
-  [
-    "η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της",
-  ];
+  text.formattedNomothesia = nomothesiaNeaTaktiki(DeadlineType.EPIDOSI, options.exoterikou || false)
 
   return text;
 };
