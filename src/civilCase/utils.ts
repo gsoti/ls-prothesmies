@@ -112,7 +112,7 @@ function getDeadlineName(type: DeadlineType): string {
     case DeadlineType.PAREMVASI_PROSEK: return "Παρέμβαση του προσεπικαλούμενου";
     case DeadlineType.PROTASEIS: return "Κατάθεση προτάσεων";
     case DeadlineType.PROSTHIKI: return "Κατάθεση προσθήκης";
-    case DeadlineType.OPSIGENEIS: return "Οψιγενείς ή παραχρήμα αποδεικνυόμενοι ισχυρυσμοί";
+    case DeadlineType.OPSIGENEIS: return "Οψιγενείς ή παραχρήμα αποδεικνυόμενοι ισχυρισμοί";
     case DeadlineType.OPSIGENEIS_ANTIKROUSI: return "Αντίκρουση σε οψιγενείς";
     case DeadlineType.DIKASIMOS: return "Δικάσιμος";
     case DeadlineType.PROSKOMIDI: return "Προσκομιδή των αποδεικτικών από τους διαδίκους και η υποβολή του έγγραφου υπομνήματος του εναγομένου";
@@ -133,7 +133,7 @@ export function getDeadlineNameShort(type: DeadlineType): string {
     case DeadlineType.PAREMVASI_PROSEK: return "Παρέμβαση του προσεπικαλούμενου";
     case DeadlineType.PROTASEIS: return "Προτάσεις";
     case DeadlineType.PROSTHIKI: return "Προσθήκη";
-    case DeadlineType.OPSIGENEIS: return "Οψιγενείς ισχυρυσμοί";
+    case DeadlineType.OPSIGENEIS: return "Οψιγενείς ισχυρισμοί";
     case DeadlineType.OPSIGENEIS_ANTIKROUSI: return "Αντίκρουση σε οψιγενείς";
     case DeadlineType.DIKASIMOS: return "Δικάσιμος";
     case DeadlineType.PROSKOMIDI: return "Προσκομιδή του εναγομένου";
