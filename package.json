@@ -1,6 +1,12 @@
 {
+  "name": "@gsoti/prothesmies", 
+  "author": "Georgios Sotiropoulos",
+  "private": true,
   "version": "0.8.6",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -17,7 +23,8 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "analyze": "size-limit --why",
+    "prepublishOnly": "npm run build"
   },
   "husky": {
     "hooks": {
@@ -30,13 +37,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "prothesmies",
-  "author": "Ioannis Mertzanis",
   "module": "dist/prothesmies.esm.js",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/imertz/prothesmies.git"
-  },
   "size-limit": [
     {
       "path": "dist/prothesmies.cjs.production.min.js",
