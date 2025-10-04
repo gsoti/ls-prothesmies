@@ -21,11 +21,11 @@ let civilCase = {
 //   // dikasimos: '2025-11-14',
 // }
 let deadlines = prothesmiesCivilCase(civilCase)
-console.log(
-  //prothesmiesNeasTaktikis('2023-04-11', { topiki: 'Φαρσάλων', yliki: 'Ειρ' })
-  // prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
-  deadlines.map(d => `${d.date}: ${d.type} ${d.calculation?.logic.days} days ${d.calculation?.logic.when} ${d.calculation?.logic.reference}`).sort().join('\n')
-);
+// console.log(
+//   //prothesmiesNeasTaktikis('2023-04-11', { topiki: 'Φαρσάλων', yliki: 'Ειρ' })
+//   // prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
+//   deadlines.map(d => `${d.date}: ${d.type} ${d.calculation?.logic.days} days ${d.calculation?.logic.when} ${d.calculation?.logic.reference}`).sort().join('\n')
+// );
 // console.log(
 
 describe('Υπολογισμός Προθεσμιών Νέας Τακτικής', () => {
