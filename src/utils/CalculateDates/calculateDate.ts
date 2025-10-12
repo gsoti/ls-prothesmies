@@ -169,9 +169,12 @@ export function getDateErgasimesOnly(
   start: string,
   noOfDays: number,
   argiesAndAnastoli: { argies: string[]; anastoli: string[] }
-) {
+): { date: Date, paused: string[], skipped: string[] } {
   let arr = [];
   let dt = new Date(start);
+
+  var paused: string[] = [];
+  var skipped: string[] = [];
 
   for (var i = 0; i < noOfDays; i) {
     dt.setTime(dt.getTime() + 24 * 3600 * 1000);
@@ -183,6 +186,8 @@ export function getDateErgasimesOnly(
     ) {
       arr.push(new Date(dt));
       i++;
+    } else {
+      paused.push(new Date(dt).toISOString().split('T')[0]);
     }
   }
   let lastDay = new Date();
@@ -194,10 +199,15 @@ export function getDateErgasimesOnly(
       r => new Date(r).toDateString() === new Date(lastDay).toDateString()
     ) !== -1
   ) {
+    skipped.push(new Date(lastDay).toISOString().split('T')[0]);
     lastDay.setTime(lastDay.getTime() + 24 * 3600 * 1000);
     arr.push(new Date(lastDay));
   }
-  return arr.at(-1) as Date;
+  return {
+    date: arr.at(-1) as Date,
+    paused: paused,
+    skipped: skipped
+  };
 }
 
 export function getDateReverse(

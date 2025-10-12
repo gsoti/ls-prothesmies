@@ -1,12 +1,14 @@
 import { Deadline } from "../types";
 import { prothesmiesMikrodiaforon } from "../utils/Mikrodiafores/prothesmiesMikrodiaforon";
 import { prothesmiesNeasTaktikis } from "../utils/NeaTaktiki/prothesmiesNeasTaktikis";
+import { prothesmiesEidikesDiadikasies } from "../utils/EidikesDiadikasies/prothesmiesEidikesDiadikasies";
 import { Topiki } from "../utils/NeaTaktiki/Types/interfaces";
 import { advancedCourtToTopiki } from "./topiki";
 import { dikasimosDeadline, parseDeadlines, unsupportedDeadlines } from "./utils";
 
 export function prothesmiesCivilCase(
   civilCase: { 
+    apotelesma: string,
     diadikasia: string, 
     court: string, 
     imerominia_katathesis: string, 
@@ -34,6 +36,18 @@ export function prothesmiesCivilCase(
       civilCase.diadikasia === 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ'
     ) {
       return _prothesmiesMikrodiaforon(civilCase, dimosio, exoterikou, topiki);
+    } else if (
+      civilCase.diadikasia === "ΑΜΟΙΒΕΣ" ||
+      civilCase.diadikasia === "ΑΝΑΚΟΠΕΣ ΚΑΤΑ ΤΗΣ ΕΚΤΕΛΕΣΗΣ (Από Μετάπτωση)" ||
+      civilCase.diadikasia === "ΑΝΑΚΟΠΕΣ" ||
+      civilCase.diadikasia === "ΑΥΤΟΚΙΝΗΤΑ-ΠΕΡΙΟΥΣΙΑΚΕΣ ΔΙΑΦΟΡΕΣ"  ||
+      civilCase.diadikasia === "ΕΙΔΙΚΗ ΔΙΑ ΤΟΥ ΤΥΠΟΥ Τ.ΠΟΛ"  ||
+      civilCase.diadikasia === "ΕΚΟΥΣΙΑ ΜΟΝΟΜΕΛΟΥΣ" ||
+      civilCase.diadikasia === "ΕΡΓΑΤΙΚΑ-ΠΕΡΙΟΥΣΙΑΚΕΣ ΔΙΑΦΟΡΕΣ" ||
+      civilCase.diadikasia === "ΜΙΣΘΩΣΕΙΣ - ΠΕΡΙΟΥΣΙΑΚΕΣ ΔΙΑΦΟΡΕΣ" ||
+      civilCase.diadikasia === "ΟΙΚΟΓΕΝΕΙΑΚΟ ΕΙΔΙΚΕΣ ΔΙΑΔΙΚΑΣΙΕΣ" 
+    ) {
+      return _prothesmiesEidikesDiadikasies(civilCase);
     }
     return unsupportedDeadlines(civilCase);
   }
@@ -84,4 +98,27 @@ export function prothesmiesCivilCase(
       deadlines.push(dikasimosDeadline(civilCase.dikasimos))
     }
     return deadlines;
+  }
+
+  function _prothesmiesEidikesDiadikasies(
+    civilCase: {
+      apotelesma: string,
+      dikasimos?: string,
+    }
+  ): Deadline[] {
+    const dikasimos = civilCase.dikasimos;
+    // it should have a dikasimos to produce deadlines and the apotelesma should be ΣΥΖΗΤΗΘΗΚΕ
+    if (!dikasimos) {
+      return [];
+    }    
+
+    // it should have a dikasimos to produce deadlines and the apotelesma should be ΣΥΖΗΤΗΘΗΚΕ
+    if (civilCase.apotelesma !== 'ΣΥΖΗΤΗΘΗΚΕ') {
+      return [
+        dikasimosDeadline(dikasimos)
+      ];
+    }    
+    
+    const prothesmies = prothesmiesEidikesDiadikasies(dikasimos);
+    return parseDeadlines(prothesmies);
   }

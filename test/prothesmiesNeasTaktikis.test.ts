@@ -8,19 +8,15 @@ import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
 // console.log(prothesmiesNeasTaktikis('2022-10-08', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-09', { topiki: 'Αθηνών' }));
 // console.log(prothesmiesNeasTaktikis('2022-10-10', { topiki: 'Αθηνών' }));
-let civilCase = {
-  diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
-  court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
-  imerominia_katathesis: '2024-07-08',
-  dikasimos: '2025-05-30',
-}
+// Test data - commented out for now
 // let civilCase = {
-//   diadikasia: 'ΜΙΚΡΟΔΙΑΦΟΡΕΣ',
-//   court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΠΕΙΡΑΙΑ)',
-//   imerominia_katathesis: '2025-04-25',
-//   // dikasimos: '2025-11-14',
+//   diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
+//   court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
+//   imerominia_katathesis: '2024-07-08',
+//   dikasimos: '2025-05-30',
+//   apotelesma: 'ΣΥΖΗΤΗΘΗΚΕ',
 // }
-let deadlines = prothesmiesCivilCase(civilCase)
+// let deadlines = prothesmiesCivilCase(civilCase)
 // console.log(
 //   //prothesmiesNeasTaktikis('2023-04-11', { topiki: 'Φαρσάλων', yliki: 'Ειρ' })
 //   // prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
@@ -120,5 +116,46 @@ describe('Υπολογισμός Προθεσμιών Νέας Τακτικής'
         ],
       },
     });
+  });
+
+  it('calculates deadlines for Nea Taktiki civil case', () => {
+    const civilCase = {
+      diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
+      court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΘΕΣΣΑΛΟΝΙΚΗΣ',
+      imerominia_katathesis: '2023-09-15',
+      dikasimos: '2022-12-23',
+      apotelesma: 'ΣΥΖΗΤΗΘΗΚΕ',
+      exoterikou: false,
+      dimosio: true,
+    };
+
+    const deadlines = prothesmiesCivilCase(civilCase);
+
+    // Verify we get deadlines
+    expect(deadlines.length).toBeGreaterThan(0);
+
+    // Check for key deadline types
+    const deadlineTypes = deadlines.map(d => d.type);
+    expect(deadlineTypes).toContain('katathesi');
+    expect(deadlineTypes).toContain('epidosi');
+    expect(deadlineTypes).toContain('paremvasi');
+    expect(deadlineTypes).toContain('protaseis');
+    expect(deadlineTypes).toContain('prosthiki');
+    expect(deadlineTypes).toContain('dikasimos');
+
+    // Verify katathesi date matches input
+    const katathesiDeadline = deadlines.find(d => d.type === 'katathesi');
+    expect(katathesiDeadline?.date).toBe('2024-01-15');
+
+    // Verify dikasimos date matches input
+    const dikasimosDeadline = deadlines.find(d => d.type === 'dikasimos');
+    expect(dikasimosDeadline?.date).toBe('2024-06-20');
+
+    // Verify epidosi is after katathesi (within 30 days for domestic cases)
+    const epidosiDeadline = deadlines.find(d => d.type === 'epidosi');
+    expect(epidosiDeadline).toBeDefined();
+    expect(new Date(epidosiDeadline!.date).getTime()).toBeGreaterThan(
+      new Date('2024-01-15').getTime()
+    );
   });
 });

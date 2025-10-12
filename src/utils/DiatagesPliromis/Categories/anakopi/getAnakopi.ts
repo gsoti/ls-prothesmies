@@ -23,5 +23,5 @@ export const getAnakopi = (epidosi: string, options?: Options): string => {
     anastoli: addArgAndAnastDays(anastoliFunc(year), [...argiesDimosiou]),
   });
 
-  return anakopi.toISOString().split('T')[0];
+  return anakopi.date.toISOString().split('T')[0];
 };
