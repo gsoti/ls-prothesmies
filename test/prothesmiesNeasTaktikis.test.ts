@@ -122,8 +122,8 @@ describe('Υπολογισμός Προθεσμιών Νέας Τακτικής'
     const civilCase = {
       diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
       court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΘΕΣΣΑΛΟΝΙΚΗΣ',
-      imerominia_katathesis: '2023-09-15',
-      dikasimos: '2022-12-23',
+      imerominia_katathesis: '2024-09-25',
+      dikasimos: '2025-02-06',
       apotelesma: 'ΣΥΖΗΤΗΘΗΚΕ',
       exoterikou: false,
       dimosio: true,
@@ -145,17 +145,17 @@ describe('Υπολογισμός Προθεσμιών Νέας Τακτικής'
 
     // Verify katathesi date matches input
     const katathesiDeadline = deadlines.find(d => d.type === 'katathesi');
-    expect(katathesiDeadline?.date).toBe('2024-01-15');
+    expect(katathesiDeadline?.date).toBe('2024-09-25');
 
     // Verify dikasimos date matches input
     const dikasimosDeadline = deadlines.find(d => d.type === 'dikasimos');
-    expect(dikasimosDeadline?.date).toBe('2024-06-20');
+    expect(dikasimosDeadline?.date).toBe('2025-02-06');
 
     // Verify epidosi is after katathesi (within 30 days for domestic cases)
     const epidosiDeadline = deadlines.find(d => d.type === 'epidosi');
     expect(epidosiDeadline).toBeDefined();
     expect(new Date(epidosiDeadline!.date).getTime()).toBeGreaterThan(
-      new Date('2024-01-15').getTime()
+      new Date('2024-09-25').getTime()
     );
   });
 });

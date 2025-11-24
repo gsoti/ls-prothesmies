@@ -18,7 +18,9 @@ const locationMappings: Record<string, Topiki> = {
     'ΝΕΩΝ ΛΙΟΣΙΩΝ': 'Ν. Λιoσίωv',
     'ΛΑΥΡΙΟΥ': 'Λαυρίoυ',
     'ΜΑΡΑΘΩΝΟΣ': 'Μαραθώvoς',
-    'ΜΕΓΑΡΩΝ': 'Μεγάρωv'
+    'ΜΕΓΑΡΩΝ': 'Μεγάρωv',
+    'ΛΑΡΙΣΑΣ': 'Λάρισας',
+    'ΙΩΑΝΝΙΝΩΝ': 'Ιωαννίνων'
   };
   
   /**
@@ -51,9 +53,9 @@ const locationMappings: Record<string, Topiki> = {
   
   /**
    * Finds the matching Topiki value for a given location name.
-   * 
+   *
    * @param location - The location name to find in the Topiki list
-   * @returns - The matching Topiki value or empty string if no match is found
+   * @returns - The matching Topiki value or 'Αθηνών' (Athens) as default if no match is found
    */
   function findMatchingTopiki(location: string): Topiki {
     // for mysolon court handling
@@ -90,9 +92,10 @@ const locationMappings: Record<string, Topiki> = {
         return topiki;
       }
     }
-    
-    // If no match is found, return empty string
-    throw new Error('[topiki] no match is found');
+
+    // If no match is found, log a warning and return Athens as default
+    console.warn(`[topiki] No match found for location: "${location}". Using default value "Αθηνών".`);
+    return 'Αθηνών';
   }
   
   /**
