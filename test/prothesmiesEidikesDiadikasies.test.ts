@@ -29,6 +29,21 @@ describe('Υπολογισμός Προθεσμιών Ειδικών Διαδι�
     expect(deadlines[0].date).toBe('2024-07-08');
   });
 
+  it('returns only dikasimos when apotelesma is empty', () => {
+    const civilCase = {
+      diadikasia: 'ΑΜΟΙΒΕΣ',
+      court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ',
+      imerominia_katathesis: '2024-07-01',
+      dikasimos: '2024-07-08',
+      apotelesma: '',
+    };
+    const deadlines = prothesmiesCivilCase(civilCase);
+
+    expect(deadlines.length).toBe(1);
+    expect(deadlines[0].type).toBe('dikasimos');
+    expect(deadlines[0].date).toBe('2024-07-08');
+  });
+
   it('returns prosthiki deadline for all Eidikes Diadikasies when conditions are met', () => {
     const diadikasiesTypes = [
       'ΑΜΟΙΒΕΣ',
