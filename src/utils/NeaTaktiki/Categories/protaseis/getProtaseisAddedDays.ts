@@ -16,6 +16,7 @@ import {
 } from '../../../Dikastiria/dikastiria';
 import { reverseDate } from '../../../Various/reverseDate';
 import { barbaraCheckIfIncludedSingle } from '../../Anastoles/prosthikiHmeronBarbara2023';
+import { getEpidosiDays } from '../epidosi/getEpidosiDays';
 
 export const getProtaseisAddedDays = (start: string, options: Options) => {
   let text: {
@@ -160,7 +161,7 @@ export const getProtaseisAddedDays = (start: string, options: Options) => {
   if (new Date(start).getTime() >= new Date('2022-01-01').getTime()) {
     let days;
     if (options.klisi === false) {
-      let epidosiDays = options?.exoterikou ? 60 : 30;
+      let epidosiDays = getEpidosiDays(start, options?.exoterikou);
       let argiesDimosiou: string[] = [];
       if (options?.dimosio) {
         argiesDimosiou = anastoliDimosiouFunc();

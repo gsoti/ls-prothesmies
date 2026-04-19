@@ -6,8 +6,13 @@ import { Deadline, DeadlineType } from "../types";
 export function parseDeadlines(input: any): Deadline[] {
   const deadlines: Deadline[] = [];
 
-  // Find all deadline keys (those without "Details" suffix)
-  const deadlineKeys = Object.keys(input).filter(key => !key.endsWith('Details') && !key.endsWith('Calculation') && input[key]);
+  const deadlineKeys = Object.keys(input).filter(
+    key =>
+      isSupportedDeadlineKey(key) &&
+      !key.endsWith('Details') &&
+      !key.endsWith('Calculation') &&
+      input[key]
+  );
 
   for (const key of deadlineKeys) {
     const type = mapToDeadlineType(key);
@@ -32,6 +37,23 @@ export function parseDeadlines(input: any): Deadline[] {
   }
 
   return deadlines;
+}
+
+function isSupportedDeadlineKey(key: string): boolean {
+  return [
+    'katathesi',
+    'epidosi',
+    'paremvasi',
+    'paremvasiProsek',
+    'protaseis',
+    'prosthiki',
+    'opsigeneis',
+    'opsigeneisAntikrousi',
+    'dikasimos',
+    'proskomidi',
+    'proskomidiParemv',
+    'prosthikiParemv',
+  ].includes(key);
 }
 
 export function unsupportedDeadlines(

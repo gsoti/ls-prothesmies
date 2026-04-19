@@ -19,7 +19,12 @@ export const getEpidosiAddedDays = (start: string, options?: Options) => {
     ypologismos: string[];
     imeres: string[];
   } = { nomothesia: [], ypologismos: [], imeres: [] };
-  let days = options?.exoterikou ? 30 : 10;
+  let days =
+    new Date(start).getTime() >= new Date('2026-01-01').getTime()
+      ? 10
+      : options?.exoterikou
+      ? 30
+      : 10;
 
   text.imeres.push(`${days} ημέρες από την κατάθεση της αγωγής.`);
 

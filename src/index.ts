@@ -1,5 +1,5 @@
-// import { prothesmiesNeasTaktikis } from './utils/NeaTaktiki/prothesmiesNeasTaktikis';
-// import { prothesmiesMikrodiaforon } from './utils/Mikrodiafores/prothesmiesMikrodiaforon';
+import { prothesmiesNeasTaktikis } from './utils/NeaTaktiki/prothesmiesNeasTaktikis';
+import { prothesmiesMikrodiaforon } from './utils/Mikrodiafores/prothesmiesMikrodiaforon';
 import { prothesmiesDiatPliromis } from './utils/DiatagesPliromis/prothesmiesDiatPliromis';
 import { prothesmiesApopoiisis } from './utils/Apodochi/prothesmiesApopoiisis';
 import { prothesmiesNDSte } from './utils/NeaDikonomiaSte/prothesmiesNDSte';
@@ -9,8 +9,8 @@ import { Deadline, DeadlineType } from './types';
 import { Nomothesia } from './nomothesia/types';
 
 export {
-  // prothesmiesNeasTaktikis,
-  // prothesmiesMikrodiaforon,
+  prothesmiesNeasTaktikis,
+  prothesmiesMikrodiaforon,
   prothesmiesDiatPliromis,
   prothesmiesApopoiisis,
   prothesmiesNDSte,
@@ -20,4 +20,3 @@ export {
   DeadlineType,
   Nomothesia,
 };
-
