@@ -34,9 +34,9 @@ describe('prothesmiesCivilCase Νέα Τακτική branch', () => {
     expect(formatDeadlines(deadlines)).toMatchInlineSnapshot(`
       "2026-01-08 - Κατάθεση                         manual
       2026-02-09 - Επίδοση                          30 ημέρες after katathesi [skipped: 2026-02-07, 2026-02-08]
-      2026-04-20 - Παρέμβαση                        70 ημέρες after epidosi [skipped: 2026-02-07, 2026-02-08]
+      2026-04-20 - Παρέμβαση                        70 ημέρες after epidosi
       2026-05-08 - Προτάσεις                        manual
-      2026-05-20 - Παρέμβαση του προσεπικαλούμενου  100 ημέρες after epidosi [skipped: 2026-02-07, 2026-02-08]
+      2026-05-20 - Παρέμβαση του προσεπικαλούμενου  100 ημέρες after epidosi
       2026-05-25 - Προσθήκη                         manual
       2026-09-15 - Δικάσιμος                        manual"
     `);

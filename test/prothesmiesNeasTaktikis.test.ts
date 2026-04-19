@@ -201,4 +201,21 @@ describe('Υπολογισμός Προθεσμιών Νέας Τακτικής'
     expect(result.paremvasiProsekCalculation?.logic.reference).toBe('epidosi');
     expect(result.paremvasiProsekCalculation?.logic.start).toBe(result.epidosi);
   });
+
+  it('keeps paused and skipped metadata leg-local for post-2026 derived deadlines', () => {
+    const result = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: true,
+    });
+
+    expect(result.epidosiCalculation?.skipped).toEqual([
+      '2026-02-07',
+      '2026-02-08',
+    ]);
+    expect(result.epidosiCalculation?.paused).toEqual([]);
+    expect(result.paremvasiCalculation?.skipped).toEqual([]);
+    expect(result.paremvasiCalculation?.paused).toEqual([]);
+    expect(result.paremvasiProsekCalculation?.skipped).toEqual([]);
+    expect(result.paremvasiProsekCalculation?.paused).toEqual([]);
+  });
 });

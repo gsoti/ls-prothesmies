@@ -60,8 +60,8 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
 
     return {
       date: paremvasiProsek.date.toISOString().split('T')[0],
-      paused: [...epidosi.paused, ...paremvasiProsek.paused],
-      skipped: [...epidosi.skipped, ...paremvasiProsek.skipped],
+      paused: paremvasiProsek.paused,
+      skipped: paremvasiProsek.skipped,
       logic: {
         days: days,
         when: 'after',

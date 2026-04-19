@@ -53,8 +53,8 @@ export const getParemvasiCalculation = (start: string, options: Options): DateCa
 
     return {
       date: paremvasi.date.toISOString().split('T')[0],
-      paused: [...epidosi.paused, ...paremvasi.paused],
-      skipped: [...epidosi.skipped, ...paremvasi.skipped],
+      paused: paremvasi.paused,
+      skipped: paremvasi.skipped,
       logic: {
         days: days,
         when: 'after',
