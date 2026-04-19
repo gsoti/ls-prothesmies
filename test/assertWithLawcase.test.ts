@@ -1,31 +1,33 @@
-import { CivilCaseInput, LawcaseAPI } from "./lawcase/api";
+import { describe, expect, it } from 'vitest';
+import { CivilCaseInput, LawcaseAPI } from './lawcase/api';
 
-describe('Assert our prothesmies against LawcaseAPI', () => {
-    it('should produce the same deadlines', async () => {
-        const api = new LawcaseAPI();
+describe('LawcaseAPI', () => {
+  it('transforms custom civil-case input into request parameters', () => {
+    const api = new LawcaseAPI();
+    const customInput: CivilCaseInput = {
+      civilCase: {
+        imerominia_katathesis: '28-03-2024',
+        dikasimos: '28-04-2025',
+      },
+      dimosio: true,
+      exoterikou: false,
+      klisi: false,
+      topiki: 'Αθηνών',
+    };
 
-        try {
-            // Using the new custom input structure
-            const customInput: CivilCaseInput = {
-                civilCase: {
-                    imerominia_katathesis: '28-03-2024',
-                    dikasimos: '28-04-2025'
-                },
-                dimosio: true,
-                exoterikou: false,
-                klisi: false,
-                topiki: 'Αθηνών'
-            };
-
-            // Transform the input to LawcaseRequestParams
-            const transformedParams = api.transformInputToParams(customInput);
-            console.log('Transformed Parameters:', transformedParams);
-
-            // Or make a request directly with the custom input
-            const inputResponse = await api.makeRequestFromInput(customInput);
-            console.log('Input Response:', inputResponse.data);
-        } catch (error) {
-            console.error('Error in example:', error);
-        }
+    expect(api.transformInputToParams(customInput)).toEqual({
+      date: '28-03-2024',
+      eidos: 1,
+      diad: 1,
+      kat: 1,
+      dhmosio: 2,
+      dwsidikia: 193,
+      kathulhn: 'Eir',
+      agwghpar: 0,
+      hmerdik: 1,
+      hm_dikasimou: '28-04-2025',
+      Ν4842: 1,
+      klhsh: 0,
     });
-})
+  });
+});

@@ -3,11 +3,15 @@ import { Nomothesia, NomothesiaCore } from "./types";
 
 
 
-export function nomothesiaNeaTaktiki(deadlineType: DeadlineType, exoterikou: boolean): Nomothesia[] {
+export function nomothesiaNeaTaktiki(
+    deadlineType: DeadlineType,
+    exoterikou: boolean,
+    katathesi?: string
+): Nomothesia[] {
     if (deadlineType === DeadlineType.EPIDOSI) {
-        return nomothesiaNeaTaktikiEpidosi(exoterikou);
+        return nomothesiaNeaTaktikiEpidosi(exoterikou, katathesi);
     } else if (deadlineType === DeadlineType.PAREMVASI) {
-        return nomothesiaNeaTaktikiParemvasi(exoterikou);
+        return nomothesiaNeaTaktikiParemvasi(exoterikou, katathesi);
     }
     return []
 }
@@ -20,7 +24,25 @@ var nomothesia215_2: NomothesiaCore = {
     text: `Στην περίπτωση του άρθρου 237, η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της και αν αυτός ή κάποιος από τους ομοδίκους διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής μέσα σε προθεσμία εξήντα (60) ημερών. Αν η αγωγή δεν επιδοθεί μέσα στην προθεσμία αυτή, θεωρείται ως μη ασκηθείσα. (όπως τροποποιήθηκε με το άρθρο δεύτερο του άρθρου 1 του Ν.4335/2015, ΦΕΚ Α 87. Έναρξη ισχύος από 1.1.2016).`
 }
 
-function nomothesiaNeaTaktikiEpidosi(exoterikou: boolean): Nomothesia[] {
+var nomothesia215_2026: NomothesiaCore = {
+    article: "Αρθ. 215 ΚΠολΔ",
+    text: `Στην περίπτωση του άρθρου 237, η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της. Αν η αγωγή πρέπει να επιδοθεί στο εξωτερικό, πρέπει να επιδοθεί και στον εισαγγελέα κατά το άρθρο 134 § 1 μέσα στην ίδια προθεσμία. Αν η αγωγή δεν επιδοθεί νομίμως μέσα στην προθεσμία αυτή, θεωρείται ως μη ασκηθείσα.`
+}
+
+function nomothesiaNeaTaktikiEpidosi(exoterikou: boolean, katathesi?: string): Nomothesia[] {
+    if (katathesi && new Date(katathesi).getTime() >= new Date('2026-01-01').getTime()) {
+        return [
+            {
+                ...nomothesia215_2026,
+                highlighted: [
+                    exoterikou
+                        ? "Αν η αγωγή πρέπει να επιδοθεί στο εξωτερικό, πρέπει να επιδοθεί και στον εισαγγελέα κατά το άρθρο 134 § 1 μέσα στην ίδια προθεσμία"
+                        : "η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της",
+                ],
+            }
+        ];
+    }
+
     let highlighted: string[] = [];
     if (exoterikou) {
         highlighted = [
@@ -53,7 +75,25 @@ var nomothesia237_2: NomothesiaCore = {
     text: "Οι αμοιβαίες αντικρούσεις γίνονται με προσθήκη στις προτάσεις, η οποία κατατίθεται μέσα στις επόμενες δεκαπέντε (15) ημέρες από τη λήξη της παραπάνω προθεσμίας. Νέοι ισχυρισμοί με την προσθήκη μπορεί να προταθούν και νέα αποδεικτικά μέσα να προσκομισθούν μόνο για την αντίκρουση ισχυρισμών που περιέχονται στις προτάσεις. Εκπρόθεσμες προτάσεις και προσθήκες δεν λαμβάνονται υπόψη."
 }
 
-function nomothesiaNeaTaktikiParemvasi(exoterikou: boolean): Nomothesia[] {
+var nomothesia238_2026: NomothesiaCore = {
+    article: "Αρθ. 238 § 1 ΚΠολΔ",
+    text: `Παρεμβάσεις, προσεπικλήσεις, ανακοινώσεις και ανταγωγές στην περίπτωση του άρθρου 237 κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε σαράντα (40) ημέρες από τη λήξη της προθεσμίας επίδοσης της αγωγής κατά την παρ. 2 του άρθρου 215. Παρεμβάσεις μετά από προσεπίκληση ή ανακοίνωση κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε εβδομήντα (70) ημέρες από τη λήξη της ίδιας προθεσμίας. Οι παραπάνω προθεσμίες παρατείνονται κατά τριάντα (30) ημέρες για όλους τους διαδίκους αν ο αρχικός εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής.`
+}
+
+function nomothesiaNeaTaktikiParemvasi(exoterikou: boolean, katathesi?: string): Nomothesia[] {
+    if (katathesi && new Date(katathesi).getTime() >= new Date('2026-01-01').getTime()) {
+        return [
+            {
+                ...nomothesia238_2026,
+                highlighted: [
+                    exoterikou
+                        ? "Οι παραπάνω προθεσμίες παρατείνονται κατά τριάντα (30) ημέρες για όλους τους διαδίκους αν ο αρχικός εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής"
+                        : "κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε σαράντα (40) ημέρες από τη λήξη της προθεσμίας επίδοσης της αγωγής",
+                ]
+            }
+        ];
+    }
+
     let highlighted: string[] = [];
     if (exoterikou) {
         highlighted = [
@@ -78,4 +118,3 @@ function nomothesiaNeaTaktikiParemvasi(exoterikou: boolean): Nomothesia[] {
         }
     ];
 }
-

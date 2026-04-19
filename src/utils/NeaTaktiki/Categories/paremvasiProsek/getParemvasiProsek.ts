@@ -13,6 +13,7 @@ import {
 } from '../../../Dikastiria/dikastiria';
 import { DateCalculation, DeadlineType } from '../../../../types';
 import { getDeadlineNameShort } from '../../../../civilCase/utils';
+import { getEpidosiDays } from '../epidosi/getEpidosiDays';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -22,12 +23,56 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
   if (options?.dimosio) {
     argiesDimosiou = anastoliDimosiouFunc();
   }
-  let days = options?.exoterikou ? 120 : 90;
-
   let topiki = options?.topiki ?? 'Αθηνών';
 
   const year = parseInt(start.slice(0, 4));
 
+  if (new Date(start).getTime() >= new Date('2026-01-01').getTime()) {
+    const epidosiDays = getEpidosiDays(start, options?.exoterikou);
+    const epidosi = getDateInfo(start, epidosiDays, {
+      argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),
+      anastoli: addArgAndAnastDays(anastoliFunc(year), [
+        ...getAnastolesAnaDikastirio(topiki, 'epidosi', options?.yliki),
+        ...barbaraGetAnastolesAnaDikastirio(topiki, 'epidosi', options?.yliki),
+        ...danielGetAnastolesAnaDikastirio(topiki, 'epidosi', options?.yliki),
+        ...argiesDimosiou,
+      ]),
+    });
+    const epidosiDate = epidosi.date.toISOString().split('T')[0];
+    const days = options?.exoterikou ? 100 : 70;
+    const paremvasiProsek = getDateInfo(epidosiDate, days, {
+      argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),
+      anastoli: addArgAndAnastDays(anastoliFunc(year), [
+        ...getAnastolesAnaDikastirio(topiki, 'paremvasi_prosek', options?.yliki),
+        ...barbaraGetAnastolesAnaDikastirio(
+          topiki,
+          'paremvasi_prosek',
+          options?.yliki
+        ),
+        ...danielGetAnastolesAnaDikastirio(
+          topiki,
+          'paremvasi_prosek',
+          options?.yliki
+        ),
+        ...argiesDimosiou,
+      ]),
+    });
+
+    return {
+      date: paremvasiProsek.date.toISOString().split('T')[0],
+      paused: [...epidosi.paused, ...paremvasiProsek.paused],
+      skipped: [...epidosi.skipped, ...paremvasiProsek.skipped],
+      logic: {
+        days: days,
+        when: 'after',
+        reference: DeadlineType.EPIDOSI,
+        start: epidosiDate,
+        name: getDeadlineNameShort(DeadlineType.EPIDOSI),
+      },
+    };
+  }
+
+  let days = options?.exoterikou ? 120 : 90;
   let paremvasi_prosek = getDateInfo(start, days, {
     argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),
     anastoli: addArgAndAnastDays(anastoliFunc(year), [
@@ -62,6 +107,6 @@ export const getParemvasiProsekCalculation = (start: string, options: Options): 
       reference: DeadlineType.KATATHESI,
       start: start,
       name: getDeadlineNameShort(DeadlineType.KATATHESI),
-    }
-  }
+    },
+  };
 };

@@ -1,161 +1,204 @@
+import { describe, expect, it } from 'vitest';
 import { prothesmiesNeasTaktikis } from '../src/utils/NeaTaktiki/prothesmiesNeasTaktikis';
-import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
-// import { getProtaseis } from '../src/utils/NeaTaktiki/Categories/getProtaseis';
-// import { getProsthiki } from '../src/utils/NeaTaktiki/Categories/getProsthiki';
-// import { getParemvasiProsek } from '../src/utils/NeaTaktiki/Categories/getParemvasiProsek';
 
-// console.log(prothesmiesNeasTaktikis('2022-10-07', { topiki: 'Αθηνών' }));
-// console.log(prothesmiesNeasTaktikis('2022-10-08', { topiki: 'Αθηνών' }));
-// console.log(prothesmiesNeasTaktikis('2022-10-09', { topiki: 'Αθηνών' }));
-// console.log(prothesmiesNeasTaktikis('2022-10-10', { topiki: 'Αθηνών' }));
-// Test data - commented out for now
-// let civilCase = {
-//   diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
-//   court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ (ΠΡΩΗΝ ΕΙΡΗΝΟΔΙΚΕΙΟ ΑΘΗΝΩΝ)',
-//   imerominia_katathesis: '2024-07-08',
-//   dikasimos: '2025-05-30',
-//   apotelesma: 'ΣΥΖΗΤΗΘΗΚΕ',
-// }
-// let deadlines = prothesmiesCivilCase(civilCase)
-// console.log(
-//   //prothesmiesNeasTaktikis('2023-04-11', { topiki: 'Φαρσάλων', yliki: 'Ειρ' })
-//   // prothesmiesNeasTaktikis('2022-04-05', { topiki: 'Ν. Iωvίας', yliki: 'Ειρ', dikasimos: '2023-05-05' })
-//   deadlines.map(d => `${d.date}: ${d.type} ${d.calculation?.logic.days} days ${d.calculation?.logic.when} ${d.calculation?.logic.reference}`).sort().join('\n')
-// );
-// console.log(
+const addDaysIso = (date: string, days: number): string => {
+  const dt = new Date(`${date}T00:00:00.000Z`);
+  dt.setUTCDate(dt.getUTCDate() + days);
+  return dt.toISOString().slice(0, 10);
+};
 
 describe('Υπολογισμός Προθεσμιών Νέας Τακτικής', () => {
-  it('works', () => {
-    expect(
-      prothesmiesNeasTaktikis('2023-09-15', {
-        topiki: 'Θεσσαλονίκης',
-        exoterikou: false,
-        dimosio: true,
-      })
-    ).toEqual({
-      katathesi: '2022-06-19',
-      epidosi: '2022-09-19',
-      paremvasi: '2022-10-18',
-      paremvasiProsek: '2022-11-17',
-      protaseis: '2022-11-17',
-      prosthiki: '2022-12-02',
-      dikasimos: '2022-12-23',
-      opsigeneis: '2022-12-02',
-      opsigeneisAntikrousi: '2022-12-13',
-      epidosiDetails: {
-        nomothesia: [
-          'Αρθ. 215 § 2 ΚΠολΔ Στην περίπτωση του άρθρου 237, η αγωγή επιδίδεται στον εναγόμενο μέσα σε προθεσμία τριάντα (30) ημερών από την κατάθεσή της και αν αυτός ή κάποιος από τους ομοδίκους διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής μέσα σε προθεσμία εξήντα (60) ημερών. Αν η αγωγή δεν επιδοθεί μέσα στην προθεσμία αυτή, θεωρείται ως μη ασκηθείσα. (όπως τροποποιήθηκε με το άρθρο δεύτερο του άρθρου 1 του Ν.4335/2015, ΦΕΚ Α 87. Έναρξη ισχύος από 1.1.2016).',
-        ],
-        ypologismos: [
-          'Εξαιρέθηκαν οι ημερομηνίες της αναστολής λόγω δικαστικών διακοπών.',
-          'Επειδή η 18-09-2022 είναι αργία (Κυριακή), η ημερομήνια μετατέθηκε στην επομένη εργάσιμη.',
-        ],
-        imeres: ['60 ημέρες από την κατάθεση της αγωγής.'],
-      },
-      paremvasiDetails: {
-        nomothesia: [
-          'Αρθ. 238 § 1 ΚΠολΔ Παρεμβάσεις, προσεπικλήσεις, ανακοινώσεις και ανταγωγές στην περίπτωση του άρθρου 237 κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε εξήντα (60) ημέρες από την κατάθεση της αγωγής. Παρεμβάσεις μετά από προσεπίκληση ή ανακοίνωση κατατίθενται και επιδίδονται σε όλους τους διαδίκους, μέσα σε ενενήντα (90) ημέρες από την κατάθεση της αγωγής. Οι παραπάνω προθεσμίες παρατείνονται κατά τριάντα (30) ημέρες για όλους τους διάδικους αν ο αρχικός εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής. Η κατάθεση των προτάσεων και της προσθήκης σε αυτές, γίνεται και στην τελευταία περίπτωση μέσα στις προθεσμίες των παραγράφων 1 και 2 του άρθρου 237.\n' +
-            'Αρθ. 237 § 2 ΚΠολΔ. Οι αμοιβαίες αντικρούσεις γίνονται με προσθήκη στις προτάσεις, η οποία κατατίθεται μέσα στις επόμενες δεκαπέντε (15) ημέρες από τη λήξη της παραπάνω προθεσμίας, με την παρέλευση των οποίων κλείνει ο φάκελος της δικογραφίας. Νέοι ισχυρισμοί με την προσθήκη μπορεί να προταθούν και νέα αποδεικτικά μέσα να προ-σκομισθούν μόνο για την αντίκρουση ισχυρισμών που περιέχονται στις προτάσεις. Εκπρόθεσμες προτάσεις και προσθήκες δεν λαμβάνονται υπόψη.',
-        ],
-        ypologismos: [
-          'Εξαιρέθηκαν οι ημερομηνίες της αναστολής λόγω δικαστικών διακοπών.',
-        ],
-        imeres: ['90 ημέρες από την κατάθεση της αγωγής.'],
-      },
-      paremvasiProsekDetails: {
-        nomothesia: [
-          'Αρθ.238 § 1 ΚΠολΔ Παρεμβάσεις, προσεπικλήσεις, ανακοινώσεις και ανταγωγές στην περίπτωση του άρθρου 237 κατατίθενται και επιδίδονται σε όλους τους διαδίκους μέσα σε εξήντα (60) ημέρες από την κατάθεση της αγωγής. Παρεμβάσεις μετά από προσεπίκληση ή ανακοίνωση κατατίθενται και επιδίδονται σε όλους τους διαδίκους, μέσα σε ενενήντα (90) ημέρες από την κατάθεση της αγωγής. Οι παραπάνω προθεσμίες παρατείνονται κατά τριάντα (30) ημέρες για όλους τους διάδικους αν ο αρχικός εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής. Η κατάθεση των προτάσεων και της προσθήκης σε αυτές, γίνεται και στην τελευταία περίπτωση μέσα στις προθεσμίες των παραγράφων 1 και 2 του άρθρου 237.\n' +
-            'Αρθ.237 § 2 ΚΠολΔ. Οι αμοιβαίες αντικρούσεις γίνονται με προσθήκη στις προτάσεις, η οποία κατατίθεται μέσα στις επόμενες δεκαπέντε (15) ημέρες από τη λήξη της παραπάνω προθεσμίας, με την παρέλευση των οποίων κλείνει ο φάκελος της δικογραφίας. Νέοι ισχυρισμοί με την προσθήκη μπορεί να προταθούν και νέα αποδεικτικά μέσα να προ-σκομισθούν μόνο για την αντίκρουση ισχυρισμών που περιέχονται στις προτάσεις. Εκπρόθεσμες προτάσεις και προσθήκες δεν λαμβάνονται υπόψη.',
-        ],
-        ypologismos: [
-          'Εξαιρέθηκαν οι ημερομηνίες της αναστολής λόγω δικαστικών διακοπών.',
-        ],
-        imeres: [
-          '120 ημέρες από το τέλος της προθεσμίας για επίδοση της αγωγής.',
-        ],
-      },
-      protaseisDetails: {
-        nomothesia: [
-          'Αρθ.237 § 1 ΚΠολΔ. Μέσα σε ενενήντα (90) ημέρες από τη λήξη της προθεσμίας για την επίδοση της αγωγής κατά την παρ. 2 του άρθρου 215, οι διάδικοι οφείλουν να καταθέσουν τις προτάσεις και να προσκομίσουν όλα τα αποδεικτικά μέσα και τα διαδικαστικά έγγραφα που επικαλούνται με αυτές. Μέσα στην ίδια προθεσμία κατατίθενται το αποδεικτικό επίδοσης της αγωγής, καθώς και τα πληρεξούσια έγγραφα προς τους δικηγόρους κατά το άρθρο 96. Σε περίπτωση έλλειψης των πληρεξουσίων εγγράφων εφαρμόζεται το άρθρο 227. Αν δεν κατατεθούν τα πληρεξούσια έγγραφα μέσα στην προθεσμία που θα ταχθεί, το δικαστήριο εκδίδει οριστική απόφαση επί της αγωγής. Το δικαστικό ένσημο κατατίθεται το αργότερο μέχρι τη συζήτηση της υπόθεσης. Η προθεσμία του πρώτου εδαφίου παρατείνεται σε εκατόν είκοσι (120) ημέρες από τη λήξη της προθεσμίας επίδοσης της αγωγής για όλους τους διαδίκους, αν ο εναγόμενος ή κάποιος από τους ομοδίκους του διαμένει στο εξωτερικό ή είναι άγνωστης διαμονής. Βλ. 237 § 1 ΚΠολΔ, όπως αντικαστάθηκε και ισχύει από την 1η.1.2022 (αντικαταστάθηκε βάσει του άρθρου 12 του Ν.4842/2021).\n' +
-            'Αρθ.237 § 3 ΚΠολΔ.Στην περίπτωση έκδοσης παραπεμπτικής απόφασης λόγω καθ’ ύλην ή κατά τόπον αναρμοδιότητας ή λόγω μη εισαγωγής της υπόθεσης κατά την προσήκουσα διαδικασία, οι ως άνω προθεσμίες των ενενήντα (90) ή εκατόν είκοσι (120) ημερών για την κατάθεση των προτάσεων αρχίζουν από την κατάθεση της κλήσης για τον προσδιορισμό δικασίμου. Το ίδιο ισχύει, αν το δικαστήριο κηρύξει απαράδεκτη τη συζήτηση της αγωγής. Στις περιπτώσεις των άρθρων 249 και 250 οι διάδικοι μπορούν να καταθέτουν συμπληρωματικές προτάσεις το αργότερο μέχρι τη νέα συζήτηση της υπόθεσης, δίχως να προτείνονται νέοι ισχυρισμοί και νέα αποδεικτικά μέσα με την επιφύλαξη της παρ. 5 του παρόντος Βλ. 237 § 3 ΚΠολΔ, όπως αντικαστάθηκε και ισχύει από την 1η.1.2022 (αντικαταστάθηκε βάσει του άρθρου 12 του Ν.4842/2021).',
-        ],
-        ypologismos: [
-          'Εξαιρέθηκαν οι ημερομηνίες της αναστολής λόγω δικαστικών διακοπών.',
-          'Επειδή η 27-11-2022 είναι αργία (Κυριακή), η ημερομήνια μετατέθηκε στην επομένη εργάσιμη.',
-        ],
-        imeres: ['Eντός 120 ημερών από την κατάθεση της κλήσης.'],
-      },
-      prosthikiDetails: {
-        nomothesia: [
-          'Αρθ.237 § 2 ΚΠολΔ. Οι αμοιβαίες αντικρούσεις γίνονται με προσθήκη στις προτάσεις, η οποία κατατίθεται μέσα στις επόμενες δεκαπέντε (15) ημέρες από τη λήξη της παραπάνω προθεσμίας, με την παρέλευση των οποίων κλείνει ο φάκελος της δικογραφίας. Νέοι ισχυρισμοί με την προσθήκη μπορεί να προταθούν και νέα αποδεικτικά μέσα να προ-σκομισθούν μόνο για την αντίκρουση ισχυρισμών που περιέχονται στις προτάσεις. Εκπρόθεσμες προτάσεις και προσθήκες δεν λαμβάνονται υπόψη.\n' +
-            'Αρθ.237 § 7 ΚΠολΔ. Μέσα σε οκτώ (8) εργάσιμες ημέρες από την εξέταση των μαρτύρων οι διάδικοι δικαιούνται με προσθήκη να προβούν σε αξιολόγηση των αποδείξεων αυτών. Νέοι ισχυρισμοί και νέα αποδεικτικά μέσα δεν λαμβάνονται υπόψη και δεν κατατίθενται νέες προτάσεις.',
-        ],
-        ypologismos: [],
-        imeres: ['Eντός 15 ημερών από την κατάθεση προτάσεων.'],
-      },
-      opsigeneisDetails: {
-        nomothesia: [
-          'Αρθ.237 § 5 ΚΠολΔ. Ισχυρισμοί που γεννήθηκαν μετά την παρέλευση της προθεσμίας για την κατάθεση των προτάσεων και της προθεσμίας αντίκρουσης ή αποδεικνύονται εγγράφως ή με δικαστική ομολογία του αντιδίκου μπορούν να προταθούν με προσθήκη στις προτάσεις το αργότερο είκοσι (20) ημέρες πριν από την ορισθείσα συζήτηση. Το πρώτο εδάφιο εφαρμόζεται και στις περιπτώσεις των άρθρων 249 και 250. Η αντίκρουση γίνεται το αργότερο δέκα (10) ημέρες πριν από την ορισθείσα συζήτηση. Στην ίδια προθεσμία του πρώτου εδαφίου της παρούσας παραγράφου ο Πρόεδρος του Πολυμελούς Πρωτοδικείου, ο δικαστής του Μονομελούς Πρωτοδικείου ή ο ειρηνοδίκης μπορούν, ύστερα από αίτηση των διαδίκων που υποβάλλεται με την αγωγή ή και αυτοτελώς πριν από την ορισμένη δικάσιμο, να καλέσουν εγγράφως τους διαδίκους ή τους νομίμους αντιπροσώπους τους να εμφανιστούν αυτοπροσώπως κατά τη συζήτηση για να τους υποβληθούν ερωτήσεις και να δώσουν διασαφήσεις για την υπόθεση.\n' +
-            '    Αρθ.249 ΚΠολΔ. Αν η διάγνωση της διαφοράς εξαρτάται ολικά ή εν μέρει από την ύπαρξη ή ανυπαρξία μιας έννομης σχέσης ή την ακυρότητα ή τη διάρρηξη μιας δικαιοπραξίας που συνιστά αντικείμενο άλλης δίκης εκκρεμούς σε πολιτικό ή διοικητικό δικαστήριο ή από ζήτημα που πρόκειται να κριθεί ή κρίνεται από διοικητική αρχή, το δικαστήριο μπορεί αυτεπαγγέλτως ή ύστερα από αίτηση κάποιου διαδίκου να διατάξει την Αναβολή της Συζήτησης εωσότου περατωθεί τελεσίδικα ή αμετάκλητα η άλλη δίκη ή εωσότου εκδοθεί από τη διοικητική αρχή απόφαση που δεν θα μπορεί να προσβληθεί. Αν η διοικητική αρχή δεν έχει ακόμη ασχοληθεί με την υπόθεση, το δικαστήριο ορίζει προθεσμία, μέσα στην οποία ο διάδικος οφείλει να προκαλέσει με αίτηση την ενέργεια της αρχής.\n' +
-            '    Αρθ.250 ΚΠολΔ. Αν είναι εκκρεμής ποινική αγωγή που επηρεάζει τη διάγνωση της διαφοράς, το δικαστήριο μπορεί, αυτεπαγγέλτως ή ύστερα από αίτηση κάποιου διαδίκου, να διατάξει την Αναβολή της Συζήτησης εωσότου περατωθεί αμετάκλητα η ποινική διαδικασία.',
-        ],
-        ypologismos: [
-          'Επειδή η 03-12-2022 είναι αργία (Σάββατο), η ημερομήνια μετατέθηκε στην προηγούμενη εργάσιμη.',
-        ],
-        imeres: [
-          'Με προσθήκη στις προτάσεις το αργότερο είκοσι (20) ημέρες πριν από την ορισθείσα συζήτηση (Βλ. άρθρο 237§5 εδ.α΄ ΚΠολΔ). ημέρες από την κατάθεση της αγωγής.',
-        ],
-      },
-      opsigeneisAntikrousiDetails: {
-        nomothesia: [
-          'Αρθ.237 § 5 ΚΠολΔ. Ισχυρισμοί που γεννήθηκαν μετά την παρέλευση της προθεσμίας για την κατάθεση των προτάσεων και της προθεσμίας αντίκρουσης ή αποδεικνύονται εγγράφως ή με δικαστική ομολογία του αντιδίκου μπορούν να προταθούν με προσθήκη στις προτάσεις το αργότερο είκοσι (20) ημέρες πριν από την ορισθείσα συζήτηση. Το πρώτο εδάφιο εφαρμόζεται και στις περιπτώσεις των άρθρων 249 και 250. Η αντίκρουση γίνεται το αργότερο δέκα (10) ημέρες πριν από την ορισθείσα συζήτηση. Στην ίδια προθεσμία του πρώτου εδαφίου της παρούσας παραγράφου ο Πρόεδρος του Πολυμελούς Πρωτοδικείου, ο δικαστής του Μονομελούς Πρωτοδικείου ή ο ειρηνοδίκης μπορούν, ύστερα από αίτηση των διαδίκων που υποβάλλεται με την αγωγή ή και αυτοτελώς πριν από την ορισμένη δικάσιμο, να καλέσουν εγγράφως τους διαδίκους ή τους νομίμους αντιπροσώπους τους να εμφανιστούν αυτοπροσώπως κατά τη συζήτηση για να τους υποβληθούν ερωτήσεις και να δώσουν διασαφήσεις για την υπόθεση.',
-        ],
-        ypologismos: [],
-        imeres: [
-          'Με προσθήκη στις προτάσεις το αργότερο δέκα (10) ημέρες πριν από την ορισθείσα συζήτηση (Βλ. άρθρο 237§5 εδ.α΄ ΚΠολΔ). ημέρες από την κατάθεση της αγωγής.',
-        ],
-      },
+  it('returns post-2026 domestic dikasimos cap fields from Article 215', () => {
+    const result = prothesmiesNeasTaktikis('2026-02-01', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
     });
+
+    expect(result.dikasimosEarliest).toBeDefined();
+    expect(result.dikasimosLatest).toBeDefined();
+    expect(result.dikasimosCalculated).toBe(result.dikasimosEarliest);
+    expect(
+      new Date(result.dikasimosLatest as string).getTime()
+    ).toBeGreaterThan(new Date(result.dikasimosEarliest as string).getTime());
+    expect(result.dikasimosCalculationDetails?.nomothesia[0]).toContain(
+      'διακόσιες (200) ημέρες'
+    );
+    expect(result.dikasimosCalculationDetails?.nomothesia[0]).toContain(
+      'διακόσιες δέκα (210) ημέρες'
+    );
   });
 
-  it('calculates deadlines for Nea Taktiki civil case', () => {
-    const civilCase = {
-      diadikasia: 'ΝΕΑ ΤΑΚΤΙΚΗ ΜΟΝΟΜΕΛΟΥΣ',
-      court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΘΕΣΣΑΛΟΝΙΚΗΣ',
-      imerominia_katathesis: '2024-09-25',
-      dikasimos: '2025-02-06',
-      apotelesma: 'ΣΥΖΗΤΗΘΗΚΕ',
+  it('applies 1/7-15/9 suspension adjustment to domestic dikasimos cap', () => {
+    const filingDate = '2026-01-10';
+    const result = prothesmiesNeasTaktikis(filingDate, {
+      topiki: 'Αθηνών',
       exoterikou: false,
-      dimosio: true,
-    };
+    });
+    const raw210Days = addDaysIso(filingDate, 210);
+    const raw200Days = addDaysIso(filingDate, 200);
 
-    const deadlines = prothesmiesCivilCase(civilCase);
-
-    // Verify we get deadlines
-    expect(deadlines.length).toBeGreaterThan(0);
-
-    // Check for key deadline types
-    const deadlineTypes = deadlines.map(d => d.type);
-    expect(deadlineTypes).toContain('katathesi');
-    expect(deadlineTypes).toContain('epidosi');
-    expect(deadlineTypes).toContain('paremvasi');
-    expect(deadlineTypes).toContain('protaseis');
-    expect(deadlineTypes).toContain('prosthiki');
-    expect(deadlineTypes).toContain('dikasimos');
-
-    // Verify katathesi date matches input
-    const katathesiDeadline = deadlines.find(d => d.type === 'katathesi');
-    expect(katathesiDeadline?.date).toBe('2024-09-25');
-
-    // Verify dikasimos date matches input
-    const dikasimosDeadline = deadlines.find(d => d.type === 'dikasimos');
-    expect(dikasimosDeadline?.date).toBe('2025-02-06');
-
-    // Verify epidosi is after katathesi (within 30 days for domestic cases)
-    const epidosiDeadline = deadlines.find(d => d.type === 'epidosi');
-    expect(epidosiDeadline).toBeDefined();
-    expect(new Date(epidosiDeadline!.date).getTime()).toBeGreaterThan(
-      new Date('2024-09-25').getTime()
+    expect(result.dikasimosEarliest).toBeDefined();
+    expect(result.dikasimosLatest).toBeDefined();
+    expect((result.dikasimosEarliest as string) > raw200Days).toBe(true);
+    expect((result.dikasimosLatest as string) > raw210Days).toBe(true);
+    expect(result.dikasimosCalculationDetails?.ypologismos[0]).toContain(
+      '1 Ιουλίου έως 15 Σεπτεμβρίου'
     );
+  });
+
+  it('returns post-2026 foreign dikasimos earliest/latest bounds', () => {
+    const result = prothesmiesNeasTaktikis('2026-02-01', {
+      topiki: 'Αθηνών',
+      exoterikou: true,
+    });
+
+    expect(result.dikasimosEarliest).toBeDefined();
+    expect(result.dikasimosLatest).toBeDefined();
+    expect(result.dikasimosCalculated).toBe(result.dikasimosEarliest);
+    expect(
+      new Date(result.dikasimosLatest as string).getTime()
+    ).toBeGreaterThan(new Date(result.dikasimosEarliest as string).getTime());
+  });
+
+  it('preserves user-provided dikasimos while still returning calculated bounds', () => {
+    const result = prothesmiesNeasTaktikis('2026-02-01', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+      dikasimos: '2026-12-15',
+    });
+
+    expect(result.dikasimos).toBe('2026-12-15');
+    expect(result.dikasimosCalculated).toBe('2026-12-15');
+    expect(result.dikasimosLatest).toBeDefined();
+  });
+
+  it('does not return new dikasimos calculation fields before 2026', () => {
+    const result = prothesmiesNeasTaktikis('2025-12-31', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+    });
+
+    expect(result.dikasimosCalculated).toBeUndefined();
+    expect(result.dikasimosEarliest).toBeUndefined();
+    expect(result.dikasimosLatest).toBeUndefined();
+    expect(result.dikasimosCalculationDetails).toBeUndefined();
+  });
+
+  it('uses fixed 30-day service window after 2026, even for foreign residence', () => {
+    const local = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+    });
+    const foreign = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: true,
+    });
+
+    expect(foreign.epidosi).toBe(local.epidosi);
+    expect(foreign.epidosiDetails?.imeres).toEqual([
+      '30 ημέρες από την κατάθεση της αγωγής.',
+    ]);
+    expect(foreign.epidosiDetails?.nomothesia[0]).toContain(
+      'μέσα στην ίδια προθεσμία'
+    );
+    expect(foreign.epidosiDetails?.nomothesia[0]).not.toContain(
+      'εξήντα (60) ημερών'
+    );
+  });
+
+  it('keeps 60-day extension for foreign residence before 2026', () => {
+    const local = prothesmiesNeasTaktikis('2025-12-01', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+    });
+    const foreign = prothesmiesNeasTaktikis('2025-12-01', {
+      topiki: 'Αθηνών',
+      exoterikou: true,
+    });
+
+    expect(foreign.epidosi).not.toBe(local.epidosi);
+    expect(foreign.epidosiDetails?.imeres).toEqual([
+      '60 ημέρες από την κατάθεση της αγωγής.',
+    ]);
+  });
+
+  it('still applies post-2026 foreign extensions to dependent deadlines', () => {
+    const local = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+    });
+    const foreign = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: true,
+    });
+
+    expect(new Date(foreign.paremvasi).getTime()).toBeGreaterThan(
+      new Date(local.paremvasi).getTime()
+    );
+    expect(new Date(foreign.paremvasiProsek).getTime()).toBeGreaterThan(
+      new Date(local.paremvasiProsek).getTime()
+    );
+    expect(new Date(foreign.protaseis).getTime()).toBeGreaterThan(
+      new Date(local.protaseis).getTime()
+    );
+    expect(foreign.paremvasiDetails?.imeres).toEqual([
+      '70 ημέρες από το πέρας της προθεσμίας επίδοσης.',
+    ]);
+    expect(foreign.paremvasiProsekDetails?.imeres).toEqual([
+      '100 ημέρες από το πέρας της προθεσμίας επίδοσης.',
+    ]);
+    expect(foreign.protaseisDetails?.imeres).toEqual([
+      'Eντός 120 ημερών από το τέλος της προθεσμίας για επίδοση της αγωγής.',
+    ]);
+  });
+
+  it('uses klisi filing date as anchor for protaseis after 2026', () => {
+    const agogiFlow = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      klisi: false,
+      exoterikou: false,
+    });
+    const klisiFlow = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      klisi: true,
+      exoterikou: false,
+    });
+
+    expect(new Date(klisiFlow.protaseis).getTime()).toBeLessThan(
+      new Date(agogiFlow.protaseis).getTime()
+    );
+    expect(klisiFlow.protaseisDetails?.imeres).toEqual([
+      'Eντός 90 ημερών από την κατάθεση της κλήσης.',
+    ]);
+    expect(klisiFlow.protaseisDetails?.nomothesia[0]).toContain('Αρθ. 237 § 3');
+    expect(klisiFlow.protaseisDetails?.nomothesia[0]).toContain(
+      'κατάθεση της κλήσης για τον προσδιορισμό δικασίμου'
+    );
+  });
+
+  it('uses 120 days for protaseis on klisi with foreign residence after 2026', () => {
+    const klisiFlowForeign = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      klisi: true,
+      exoterikou: true,
+    });
+
+    expect(klisiFlowForeign.protaseisDetails?.imeres).toEqual([
+      'Eντός 120 ημερών από την κατάθεση της κλήσης.',
+    ]);
+  });
+
+  it('keeps calculation metadata for derived deadlines after 2026', () => {
+    const result = prothesmiesNeasTaktikis('2026-01-08', {
+      topiki: 'Αθηνών',
+      exoterikou: false,
+    });
+
+    expect(result.epidosiCalculation?.date).toBe(result.epidosi);
+    expect(result.paremvasiCalculation?.date).toBe(result.paremvasi);
+    expect(result.paremvasiCalculation?.logic.reference).toBe('epidosi');
+    expect(result.paremvasiCalculation?.logic.start).toBe(result.epidosi);
+    expect(result.paremvasiProsekCalculation?.logic.reference).toBe('epidosi');
+    expect(result.paremvasiProsekCalculation?.logic.start).toBe(result.epidosi);
   });
 });

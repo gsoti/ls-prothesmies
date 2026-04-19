@@ -14,6 +14,7 @@ import {
   normalizePeriohesWithExceptions,
 } from '../../../Dikastiria/dikastiria';
 import { barbaraCheckIfIncludedSingle } from '../../Anastoles/prosthikiHmeronBarbara2023';
+import { getEpidosiDays } from '../epidosi/getEpidosiDays';
 
 // interface Options {
 //   dimosio?: boolean;
@@ -28,7 +29,7 @@ export const getProtaseis = (start: string, options: Options): string => {
   const year = parseInt(start.slice(0, 4));
   if (new Date(start).getTime() >= new Date('2022-01-01').getTime()) {
     if (options.klisi === false) {
-      let epidosiDays = options?.exoterikou ? 60 : 30;
+      let epidosiDays = getEpidosiDays(start, options?.exoterikou);
 
       let epidosi = getDate(start, epidosiDays, {
         argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),

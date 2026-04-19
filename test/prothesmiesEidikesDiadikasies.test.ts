@@ -1,5 +1,7 @@
+import { describe, expect, it } from 'vitest';
 import { prothesmiesCivilCase } from '../src/civilCase/prothesmiesCivilCase';
 import { prothesmiesEidikesDiadikasies } from '../src/utils/EidikesDiadikasies/prothesmiesEidikesDiadikasies';
+import { prothesmiesNeasTaktikis } from '../src/utils/NeaTaktiki/prothesmiesNeasTaktikis';
 
 describe('Υπολογισμός Προθεσμιών Ειδικών Διαδικασιών', () => {
   it('returns empty array when dikasimos is missing', () => {
@@ -142,5 +144,29 @@ describe('Υπολογισμός Προθεσμιών Ειδικών Διαδι�
     const deadlines = prothesmiesCivilCase(civilCase);
 
     expect(deadlines).toMatchSnapshot();
+  });
+
+  it('routes post-2026 eidikes cases through the new calculation flow', () => {
+    const civilCase = {
+      diadikasia: 'ΑΜΟΙΒΕΣ',
+      court: 'ΠΡΩΤΟΔΙΚΕΙΟ ΑΘΗΝΩΝ',
+      imerominia_katathesis: '2026-02-10',
+      dikasimos: '2026-06-10',
+      apotelesma: '',
+    };
+    const deadlines = prothesmiesCivilCase(civilCase);
+    const raw = prothesmiesNeasTaktikis('2026-02-10', {
+      mode: 'eidikes',
+      topiki: 'Αθηνών',
+      dikasimos: '2026-06-10',
+    });
+
+    expect(deadlines.find(d => d.type === 'epidosi')?.date).toBe(raw.epidosi);
+    expect(deadlines.find(d => d.type === 'protaseis')?.date).toBe(
+      raw.protaseis
+    );
+    expect(deadlines.find(d => d.type === 'prosthiki')?.date).toBe(
+      raw.prosthiki
+    );
   });
 });

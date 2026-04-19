@@ -13,13 +13,14 @@ import {
 } from '../../../Dikastiria/dikastiria';
 import { DateCalculation, DeadlineType } from '../../../../types';
 import { getDeadlineNameShort } from '../../../../civilCase/utils';
+import { getEpidosiDays } from './getEpidosiDays';
 
 // interface Options {
 //   dimosio?: boolean;
 // }
 export const getEpidosiCalculation = (start: string, options: Options): DateCalculation => {
   let argiesDimosiou: string[] = [];
-  let days = options?.exoterikou ? 60 : 30;
+  let days = getEpidosiDays(start, options?.exoterikou);
 
   if (options?.dimosio) {
     argiesDimosiou = anastoliDimosiouFunc();

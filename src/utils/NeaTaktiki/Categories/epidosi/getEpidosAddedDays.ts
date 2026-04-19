@@ -13,6 +13,7 @@ import {
   getAnastolesAnaDikastirio,
   danielGetAnastolesAnaDikastirio,
 } from '../../../Dikastiria/dikastiria';
+import { getEpidosiDays } from './getEpidosiDays';
 
 export const getEpidosiAddedDays = (start: string, options: Options) => {
   if (earlierThan('2021-03-26', start)) {
@@ -22,7 +23,7 @@ export const getEpidosiAddedDays = (start: string, options: Options) => {
       imeres: string[];
     } = { nomothesia: [], ypologismos: [], imeres: [] };
     let argiesDimosiou: string[] = [];
-    let days = options?.exoterikou ? 60 : 30;
+    let days = getEpidosiDays(start, options?.exoterikou);
 
     if (options?.dimosio) {
       argiesDimosiou = anastoliDimosiouFunc();
@@ -87,7 +88,7 @@ export const getEpidosiAddedDays = (start: string, options: Options) => {
     let topiki = options?.topiki ?? 'Αθηνών';
 
     const year = parseInt(start.slice(0, 4));
-    let days = options?.exoterikou ? 60 : 30;
+    let days = getEpidosiDays(start, options?.exoterikou);
 
     const argia = analyseArgies(start, days, {
       argies: addArgAndAnastDays(argiesFunc(year), [...extraArgies]),

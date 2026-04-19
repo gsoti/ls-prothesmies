@@ -47,7 +47,7 @@ export function prothesmiesCivilCase(
       civilCase.diadikasia === "ΜΙΣΘΩΣΕΙΣ - ΠΕΡΙΟΥΣΙΑΚΕΣ ΔΙΑΦΟΡΕΣ" ||
       civilCase.diadikasia === "ΟΙΚΟΓΕΝΕΙΑΚΟ ΕΙΔΙΚΕΣ ΔΙΑΔΙΚΑΣΙΕΣ" 
     ) {
-      return _prothesmiesEidikesDiadikasies(civilCase);
+      return _prothesmiesEidikesDiadikasies(civilCase, dimosio, exoterikou, topiki);
     }
     return unsupportedDeadlines(civilCase);
   }
@@ -72,7 +72,14 @@ export function prothesmiesCivilCase(
         dikasimos: civilCase.dikasimos,
         
       });
-      return parseDeadlines(prothesmies);
+      const normalized = {
+        ...prothesmies,
+        dikasimos: prothesmies.dikasimos ?? prothesmies.dikasimosCalculated,
+        dikasimosDetails:
+          (prothesmies as any).dikasimosDetails ??
+          prothesmies.dikasimosCalculationDetails,
+      };
+      return parseDeadlines(normalized);
     } catch (error) {
       throw error
     }
@@ -103,9 +110,31 @@ export function prothesmiesCivilCase(
   function _prothesmiesEidikesDiadikasies(
     civilCase: {
       apotelesma: string,
+      imerominia_katathesis: string,
       dikasimos?: string,
-    }
+    },
+    dimosio: boolean,
+    exoterikou: boolean,
+    topiki: Topiki
   ): Deadline[] {
+    if (new Date(civilCase.imerominia_katathesis).getTime() >= new Date('2026-01-01').getTime()) {
+      const prothesmies = prothesmiesNeasTaktikis(civilCase.imerominia_katathesis, {
+        dimosio,
+        exoterikou,
+        topiki,
+        dikasimos: civilCase.dikasimos,
+        mode: 'eidikes',
+      });
+      const normalized = {
+        ...prothesmies,
+        dikasimos: prothesmies.dikasimos ?? prothesmies.dikasimosCalculated,
+        dikasimosDetails:
+          (prothesmies as any).dikasimosDetails ??
+          prothesmies.dikasimosCalculationDetails,
+      };
+      return parseDeadlines(normalized);
+    }
+
     const dikasimos = civilCase.dikasimos;
     // it should have a dikasimos to produce deadlines and the apotelesma should be ΣΥΖΗΤΗΘΗΚΕ
     if (!dikasimos) {
